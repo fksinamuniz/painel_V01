@@ -7,14 +7,10 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Painel de Monitoramento RAG V.01</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -49,6 +45,39 @@
         .year-result-grid > div {
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
+        }
+
+        /* Otimizações de Impressão e Exportação para PDF sem bibliotecas externas */
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #111827 !important;
+            }
+            header, main, footer, #toast-container, #lineage-modal, .no-print {
+                display: none !important;
+            }
+            #goal-modal {
+                position: static !important;
+                background: transparent !important;
+                display: block !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                height: auto !important;
+                inset: auto !important;
+            }
+            #modal-content-wrapper {
+                box-shadow: none !important;
+                border: 1px solid #d1d5db !important;
+                max-height: none !important;
+                overflow: visible !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+            #close-modal, #export-pdf-btn {
+                display: none !important;
+            }
         }
     </style>
 </head>
@@ -730,7 +759,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('goal-modal');
     const modalWrapper = document.getElementById('modal-content-wrapper');
 
-    let yearCharts = {}; 
     let activeData = []; 
 
     function initializeData() {
@@ -882,12 +910,84 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function showError(container, error) { 
-        console.error("AI Error:", error); 
+        console.error("Erro:", error); 
         container.innerHTML = `
             <div class="p-4 bg-red-100 text-red-700 rounded-lg">
                 <strong>Erro na operação:</strong>
-                <p class="text-sm mt-1">${error.message || 'Falha na comunicação com a API.'}</p>
+                <p class="text-sm mt-1">${error.message || 'Falha ao processar solicitação.'}</p>
             </div>`; 
+    }
+
+    // Renderização nativa de gráfico Doughnut em Canvas 2D (sem dependência externa)
+    function drawNativeDoughnut(canvas, data, colors) {
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        const width = canvas.parentElement.clientWidth || 240;
+        const height = 200;
+        const dpr = window.devicePixelRatio || 1;
+
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        ctx.scale(dpr, dpr);
+
+        ctx.clearRect(0, 0, width, height);
+
+        const total = data.reduce((a, b) => a + b, 0);
+        const centerX = width / 2;
+        const centerY = height * 0.48;
+        const outerRadius = Math.min(centerX, centerY) * 0.82;
+        const innerRadius = outerRadius * 0.58;
+
+        if (total === 0) {
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, outerRadius, 0, 2 * Math.PI);
+            ctx.arc(centerX, centerY, innerRadius, 2 * Math.PI, 0, true);
+            ctx.fillStyle = '#E5E7EB';
+            ctx.fill();
+
+            ctx.fillStyle = '#9CA3AF';
+            ctx.font = '600 12px system-ui, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Sem metas', centerX, centerY);
+            return;
+        }
+
+        let startAngle = -Math.PI / 2;
+        for (let i = 0; i < data.length; i++) {
+            const val = data[i];
+            if (val <= 0) continue;
+
+            const sliceAngle = (val / total) * 2 * Math.PI;
+            const endAngle = startAngle + sliceAngle;
+
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, outerRadius, startAngle, endAngle);
+            ctx.arc(centerX, centerY, innerRadius, endAngle, startAngle, true);
+            ctx.closePath();
+            ctx.fillStyle = colors[i];
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#FFFFFF';
+            ctx.stroke();
+
+            startAngle = endAngle;
+        }
+
+        // Texto central consolidado
+        ctx.fillStyle = '#1F2937';
+        ctx.font = 'bold 20px system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(`${total}`, centerX, centerY - 5);
+
+        ctx.fillStyle = '#6B7280';
+        ctx.font = '600 10px system-ui, sans-serif';
+        ctx.fillText('METAS', centerX, centerY + 13);
     }
 
     function renderAllYearCharts(baseFilteredData) {
@@ -897,16 +997,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedStatusFilter = statusFilter.value;
 
         years.forEach(year => {
-            const chartContainer = document.createElement('div');
-            chartContainer.className = 'w-full h-80 flex flex-col items-center';
-            chartContainer.innerHTML = `
-                <h4 class="text-lg font-semibold text-gray-700 mb-2" id="chart-label-${year}">Resumo ${year}</h4>
-                <div class="relative w-full h-full">
-                    <canvas id="summaryChart${year}" role="img" aria-labelledby="chart-label-${year}"></canvas>
-                </div>
-            `;
-            chartsGrid.appendChild(chartContainer);
-
             let filteredForChart = baseFilteredData;
             if (selectedStatusFilter !== 'todos') {
                 filteredForChart = baseFilteredData.filter(goal => {
@@ -935,48 +1025,42 @@ document.addEventListener('DOMContentLoaded', () => {
                     statusCounts[simplifiedStatus]++;
                 }
             });
-            
-            const chartData = {
-                labels: ['Alcançada', 'Não Alcançada', 'Outros (Em Andamento/N/A)'],
-                datasets: [{
-                    label: `Metas ${year}`,
-                    data: [statusCounts['Alcançada'], statusCounts['Não Alcançada'], statusCounts['Outro']],
-                    backgroundColor: ['#22C55E', '#EF4444', '#FBBF24'],
-                    borderColor: '#fff',
-                    borderWidth: 2
-                }]
-            };
 
-            const canvasElement = document.getElementById(`summaryChart${year}`);
-            if (!canvasElement) return;
-            const ctx = canvasElement.getContext('2d');
-            if (!ctx) return;
+            const total = statusCounts['Alcançada'] + statusCounts['Não Alcançada'] + statusCounts['Outro'];
+            const pctAlcancada = total > 0 ? ((statusCounts['Alcançada'] / total) * 100).toFixed(1) : 0;
+            const pctNaoAlcancada = total > 0 ? ((statusCounts['Não Alcançada'] / total) * 100).toFixed(1) : 0;
+            const pctOutro = total > 0 ? ((statusCounts['Outro'] / total) * 100).toFixed(1) : 0;
 
-            if (yearCharts[year]) { yearCharts[year].destroy(); }
+            const chartContainer = document.createElement('div');
+            chartContainer.className = 'w-full flex flex-col items-center bg-gray-50 p-4 rounded-xl border border-gray-200';
+            chartContainer.innerHTML = `
+                <h4 class="text-base font-bold text-gray-800 mb-1" id="chart-label-${year}">Desempenho ${year}</h4>
+                <div class="relative w-full flex justify-center my-1">
+                    <canvas id="summaryChart${year}" role="img" aria-labelledby="chart-label-${year}"></canvas>
+                </div>
+                <div class="w-full flex flex-col gap-1.5 mt-2 text-xs">
+                    <div class="flex items-center justify-between bg-white px-2.5 py-1 rounded border border-gray-100">
+                        <span class="flex items-center text-gray-700"><span class="w-2.5 h-2.5 rounded-full bg-green-500 mr-2"></span>Alcançadas</span>
+                        <span class="font-bold text-gray-800">${statusCounts['Alcançada']} <span class="text-gray-400 font-normal">(${pctAlcancada}%)</span></span>
+                    </div>
+                    <div class="flex items-center justify-between bg-white px-2.5 py-1 rounded border border-gray-100">
+                        <span class="flex items-center text-gray-700"><span class="w-2.5 h-2.5 rounded-full bg-red-500 mr-2"></span>Não Alcançadas</span>
+                        <span class="font-bold text-gray-800">${statusCounts['Não Alcançada']} <span class="text-gray-400 font-normal">(${pctNaoAlcancada}%)</span></span>
+                    </div>
+                    <div class="flex items-center justify-between bg-white px-2.5 py-1 rounded border border-gray-100">
+                        <span class="flex items-center text-gray-700"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 mr-2"></span>Outros (Andamento/N/A)</span>
+                        <span class="font-bold text-gray-800">${statusCounts['Outro']} <span class="text-gray-400 font-normal">(${pctOutro}%)</span></span>
+                    </div>
+                </div>
+            `;
+            chartsGrid.appendChild(chartContainer);
 
-            yearCharts[year] = new Chart(ctx, {
-                type: 'doughnut',
-                data: chartData,
-                options: {
-                    responsive: true, 
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom' },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    if (label) { label += ': '; }
-                                    const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                                    const percentage = total > 0 ? ((context.parsed / total) * 100).toFixed(1) + '%' : '0%';
-                                    label += `${context.raw} (${percentage})`;
-                                    return label;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
+            const canvas = document.getElementById(`summaryChart${year}`);
+            drawNativeDoughnut(
+                canvas,
+                [statusCounts['Alcançada'], statusCounts['Não Alcançada'], statusCounts['Outro']],
+                ['#22C55E', '#EF4444', '#FBBF24']
+            );
         });
     }
 
@@ -1061,112 +1145,12 @@ document.addEventListener('DOMContentLoaded', () => {
         renderGoals(baseFilteredData, selectedYearToList);
     }
 
-    async function exportModalContentToPDF(goal, selectedYear, periodText) {
-        const { jsPDF } = window.jspdf || {};
-        if (!jsPDF) {
-            showToast("Biblioteca PDF indisponível no momento.", "error");
-            return;
-        }
-
-        const modalContentForExport = document.getElementById('goal-export-content');
-        const modalTitleText = `Meta ${goal.id}: ${goal.title}`;
-        const modalSubtitleText = `RAG ${selectedYear} - ${periodText}`;
-    
-        if (!modalContentForExport) {
-            showToast("Conteúdo para exportação não encontrado.", "warning");
-            return;
-        }
-    
-        const exportButton = document.getElementById('export-pdf-btn');
-        const originalButtonText = exportButton.innerHTML;
-        exportButton.disabled = true;
-        exportButton.innerHTML = 'Gerando PDF...';
-    
-        try {
-            const canvas = await html2canvas(modalContentForExport, {
-                scale: 2,
-                useCORS: true,
-                backgroundColor: '#ffffff'
-            });
-    
-            const imgData = canvas.toDataURL('image/png');
-            const pdf = new jsPDF({
-                orientation: 'p',
-                unit: 'mm',
-                format: 'a4'
-            });
-    
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-            const margin = 15;
-            const contentWidth = pdfWidth - 2 * margin;
-    
-            let currentY = margin;
-            pdf.setFontSize(13);
-            pdf.setTextColor(40, 40, 40);
-            const titleLines = pdf.splitTextToSize(modalTitleText, contentWidth);
-            pdf.text(titleLines, margin, currentY + 5);
-            currentY += titleLines.length * 6 + 5; 
-    
-            pdf.setFontSize(10);
-            pdf.setTextColor(100, 100, 100);
-            const subtitleLines = pdf.splitTextToSize(modalSubtitleText, contentWidth);
-            pdf.text(subtitleLines, margin, currentY);
-            currentY += subtitleLines.length * 5 + 8;
-    
-            const imgProps = pdf.getImageProperties(imgData);
-            const canvasOriginalWidth = imgProps.width;
-            const canvasOriginalHeight = imgProps.height;
-            const imageDisplayWidth = contentWidth;
-            const imageDisplayHeight = (canvasOriginalHeight * imageDisplayWidth) / canvasOriginalWidth;
-    
-            let canvasCutPositionY = 0; 
-            let canvasHeightRemaining = canvasOriginalHeight;
-    
-            while (canvasHeightRemaining > 0) {
-                if (currentY > pdfHeight - margin - 10 && canvasHeightRemaining > 0) { 
-                    pdf.addPage();
-                    currentY = margin;
-                }
-    
-                const availablePageHeightForImage = pdfHeight - margin - currentY;
-                let canvasSliceHeight = (availablePageHeightForImage / imageDisplayHeight) * canvasOriginalHeight;
-                canvasSliceHeight = Math.min(canvasSliceHeight, canvasHeightRemaining); 
-                
-                if (canvasSliceHeight <= 0 && canvasHeightRemaining > 0) { 
-                    pdf.addPage(); 
-                    currentY = margin;
-                    const fullPageImageHeight = pdfHeight - 2 * margin;
-                    canvasSliceHeight = Math.min((fullPageImageHeight / imageDisplayHeight) * canvasOriginalHeight, canvasHeightRemaining);
-                }
-
-                const displaySegmentHeight = (canvasSliceHeight * imageDisplayWidth) / canvasOriginalWidth;
-
-                if (displaySegmentHeight > 0) {
-                    pdf.addImage(
-                        imgData, 'PNG',
-                        margin, currentY,
-                        imageDisplayWidth, displaySegmentHeight,
-                        undefined, 'FAST', 0,
-                        0, 
-                        canvasCutPositionY, 
-                        canvasOriginalWidth, 
-                        canvasSliceHeight  
-                    );
-                }
-                currentY += displaySegmentHeight + 2; 
-                canvasCutPositionY += canvasSliceHeight;
-                canvasHeightRemaining -= canvasSliceHeight;
-            }
-            pdf.save(`Relatorio_Meta_${goal.id}_${selectedYear}_${periodText.replace(/º RDQA/g, 'Q').replace(/\s+/g, '_')}.pdf`);
-            showToast("Relatório PDF baixado com sucesso!", "success");
-        } catch (error) {
-            console.error("Error generating PDF:", error);
-            showToast("Falha ao gerar o documento PDF.", "error");
-        } finally {
-            exportButton.disabled = false;
-            exportButton.innerHTML = originalButtonText;
-        }
+    // Exportação para PDF via API nativa de impressão/salvamento vetorial do navegador
+    function exportModalContentToPDF(goal, selectedYear, periodText) {
+        showToast("Abrindo pré-visualização para salvar em PDF...", "info");
+        setTimeout(() => {
+            window.print();
+        }, 200);
     }
 
     function openGoalModal(goal) {
@@ -1265,9 +1249,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="mt-8 pt-4 border-t flex flex-col sm:flex-row justify-end gap-3">
                     <button id="export-pdf-btn" class="w-full sm:w-auto bg-green-600 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                         </svg>
-                        Exportar para PDF
+                        Salvar / Exportar PDF
                     </button>
                 </div>
             </div>`;
@@ -1307,6 +1291,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     searchInput.addEventListener('input', filterAndRender); 
+
+    // Redesenhar gráficos ao redimensionar a tela para manter a resolução nítida
+    window.addEventListener('resize', () => {
+        const searchTerm = searchInput.value.toLowerCase();
+        const selectedDiretriz = diretrizFilter.value;
+        const selectedObjetivo = objetivoFilter.value;
+        const baseFilteredData = activeData.filter(goal => {
+            const searchMatch = goal.title.toLowerCase().includes(searchTerm) || String(goal.id).includes(searchTerm) || `meta ${goal.id}`.includes(searchTerm);
+            const diretrizMatch = selectedDiretriz === 'todas' || goal.diretriz === selectedDiretriz;
+            const objetivoMatch = selectedObjetivo === 'todos' || goal.objetivo === selectedObjetivo;
+            return searchMatch && diretrizMatch && objetivoMatch;
+        });
+        renderAllYearCharts(baseFilteredData);
+    });
     
     const lineageModal = document.getElementById('lineage-modal');
     const openLineageBtns = [document.getElementById('btn-lineage-footer')].filter(Boolean);

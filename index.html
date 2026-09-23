@@ -38,13 +38,6 @@
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
-
-        .ai-content h3 { font-size: 1.125rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb; }
-        .ai-content ul { list-style-type: disc; margin-left: 1.5rem; margin-bottom: 1rem; }
-        .ai-content li { margin-bottom: 0.5rem; }
-        .ai-content table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        .ai-content th, .ai-content td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        .ai-content th { background-color: #f2f2f2; font-weight: 600; }
         
         .year-result-grid {
             display: grid;
@@ -75,12 +68,6 @@
                 </div>
             </div>
             <div class="flex items-center space-x-3">
-                <button id="config-api-btn" class="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-3 rounded-lg text-sm transition-colors border border-gray-300">
-                    <svg class="w-4 h-4 mr-1 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
-                    </svg>
-                    Chave de API
-                </button>
                 <a href="https://drive.google.com/uc?export=download&id=1s7rHeQYqYhZqTiYfHms_UHR5Gs3MAiRT" 
                    target="_blank" 
                    rel="noopener noreferrer"
@@ -162,28 +149,6 @@
         </div>
     </main>
 
-    <!-- Modal for API Key Configuration -->
-    <div id="api-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6 modal-enter">
-            <div class="flex justify-between items-center mb-4 pb-2 border-b">
-                <h3 class="text-lg font-bold text-gray-800">Configuração de Chave de API</h3>
-                <button id="close-api-modal" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
-            </div>
-            <p class="text-sm text-gray-600 mb-4">
-                Insira sua chave do Google Gemini para habilitar análises inteligentes e planos de ação. A chave é salva localmente no navegador.
-            </p>
-            <div class="space-y-3">
-                <label for="gemini-api-key-input" class="block text-xs font-semibold text-gray-700 uppercase">Chave de API Gemini</label>
-                <input type="password" id="gemini-api-key-input" placeholder="AIzaSy..." class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
-                <div id="api-key-feedback" class="text-xs hidden py-1"></div>
-            </div>
-            <div class="flex justify-end space-x-2 mt-6">
-                <button id="clear-api-key-btn" class="px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded transition-colors">Limpar Chave</button>
-                <button id="save-api-key-btn" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium rounded transition-colors">Salvar</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal for Goal Details & AI Analysis -->
     <div id="goal-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
         <div id="modal-content-wrapper" class="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto modal-enter">
@@ -198,29 +163,7 @@
         <p>Todos os direitos reservados © 2025 Frank Sinatra da Silva Muniz</p>
     </footer>
 
-    <script type="importmap">
-    {
-      "imports": {
-        "@google/genai": "https://esm.sh/@google/genai@^1.5.1"
-      }
-    }
-    </script>
     <script type="module">
-import { GoogleGenAI } from "@google/genai";
-
-// Secure API key retrieval: retrieved strictly from user-configured local storage or runtime environment
-function getStoredApiKey() {
-    return localStorage.getItem("GEMINI_API_KEY") || "";
-}
-
-function setStoredApiKey(key) {
-    if (key && key.trim()) {
-        localStorage.setItem("GEMINI_API_KEY", key.trim());
-    } else {
-        localStorage.removeItem("GEMINI_API_KEY");
-    }
-}
-
 function showToast(message, type = "info") {
     const container = document.getElementById("toast-container");
     if (!container) return;
@@ -726,49 +669,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('goal-modal');
     const modalWrapper = document.getElementById('modal-content-wrapper');
 
-    // API Key modal elements
-    const apiModal = document.getElementById('api-modal');
-    const configApiBtn = document.getElementById('config-api-btn');
-    const closeApiModalBtn = document.getElementById('close-api-modal');
-    const apiKeyInput = document.getElementById('gemini-api-key-input');
-    const saveApiKeyBtn = document.getElementById('save-api-key-btn');
-    const clearApiKeyBtn = document.getElementById('clear-api-key-btn');
-
     let yearCharts = {}; 
     let activeData = []; 
-
-    configApiBtn.addEventListener('click', () => {
-        apiKeyInput.value = getStoredApiKey();
-        apiModal.classList.remove('hidden');
-        apiKeyInput.focus();
-    });
-
-    closeApiModalBtn.addEventListener('click', () => {
-        apiModal.classList.add('hidden');
-    });
-
-    saveApiKeyBtn.addEventListener('click', () => {
-        const val = apiKeyInput.value.trim();
-        if (val) {
-            setStoredApiKey(val);
-            showToast("Chave de API salva com sucesso no navegador!", "success");
-        } else {
-            setStoredApiKey("");
-            showToast("Chave de API removida.", "info");
-        }
-        apiModal.classList.add('hidden');
-    });
-
-    clearApiKeyBtn.addEventListener('click', () => {
-        apiKeyInput.value = "";
-        setStoredApiKey("");
-        showToast("Chave de API apagada.", "info");
-        apiModal.classList.add('hidden');
-    });
-
-    apiModal.addEventListener('click', (e) => {
-        if (e.target === apiModal) apiModal.classList.add('hidden');
-    });
 
     function initializeData() {
         let allDiretrizes = new Set();
@@ -1098,203 +1000,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderGoals(baseFilteredData, selectedYearToList);
     }
 
-    async function callGeminiAPI(promptText) {
-        const currentKey = getStoredApiKey();
-        if (!currentKey) {
-            // Prompt user directly via the UI modal rather than throwing an obscure failure
-            apiModal.classList.remove('hidden');
-            apiKeyInput.focus();
-            throw new Error('Nenhuma chave de API configurada. Clique em "Chave de API" no topo da página para salvar sua chave do Google Gemini.');
-        }
-
-        try {
-            const client = new GoogleGenAI({ apiKey: currentKey });
-            const response = await client.models.generateContent({
-                model: 'gemini-2.5-flash',
-                contents: promptText 
-            });
-            const text = response.text;
-
-            if (typeof text === 'string') {
-                return text;
-            } else {
-                throw new Error('Resposta da API inválida ou texto não retornado.');
-            }
-        } catch (error) {
-            console.error("Gemini API call failure:", error);
-            let errorMessage = 'Falha ao contatar a API Gemini.';
-            if (error instanceof Error && error.message) {
-                errorMessage += ` Detalhes: ${error.message}`;
-            }
-            throw new Error(errorMessage);
-        }
-    }
-
-    async function generateQualitativeAnalysis(goal, resultForModal, statusForModal, periodText, year) {
-        const contentContainer = document.getElementById('qualitative-analysis-content');
-        const genButton = document.getElementById('generate-analysis-btn');
-        genButton.disabled = true;
-        showLoading(contentContainer, "Gerando análise qualitativa com IA...");
-        (document.getElementById('action-plan-container')).classList.add('hidden'); 
-        (document.getElementById('export-action-plan-csv-btn'))?.classList.add('hidden');
-        const yearData = goal.yearly_data[year];
-
-        const prompt = `
-            Você é um especialista em gestão de saúde pública (SUS) e análise de indicadores do Relatório Anual de Gestão (RAG).
-            Gere uma análise qualitativa concisa e objetiva para a seguinte meta:
-
-            **Meta ID:** ${goal.id}
-            **Título da Meta:** ${goal.title}
-            **Ano de Referência:** ${year}
-            **Período de Análise:** ${periodText}
-            **Diretriz Estratégica:** ${goal.diretriz}
-            **Objetivo Estratégico:** ${goal.objetivo}
-            **Resultado Esperado:** ${yearData.esperado}
-            **Resultado Alcançado:** ${resultForModal}
-            **Status Atual:** ${statusForModal.text}
-            **Polaridade da Meta:** ${goal.polaridade === 'maior' ? 'Quanto maior, melhor' : 'Quanto menor, melhor'}
-
-            **Instruções para a Análise (formato Markdown):**
-
-            1.  **Análise Comparativa do Resultado:**
-                *   Compare brevemente o resultado alcançado com o esperado para o período.
-                *   Destaque se o resultado superou, atingiu, atingiu parcialmente ou não atingiu a meta, e a relevância dessa diferença.
-
-            2.  **Hipóteses e Fatores Contribuintes (2-3 pontos principais):**
-                *   Levante hipóteses concisas sobre os possíveis fatores que influenciaram o resultado (positivo ou negativo).
-                *   Seja específico(a) se possível, considerando o contexto da saúde pública municipal.
-
-            3.  **Sugestões Estratégicas (2-3 ações concretas):**
-                *   Proponha ações claras, realistas e direcionadas para manter/melhorar o resultado ou para reverter um cenário negativo.
-
-            Mantenha a linguagem profissional, clara e direta. Retorne apenas o texto em Markdown formatado.
-        `;
-        try {
-            const text = await callGeminiAPI(prompt);
-            const converter = new showdown.Converter({tables: true, openLinksInNewWindow: true, simplifiedAutoLink: true, strikethrough: true});
-            contentContainer.innerHTML = converter.makeHtml(text);
-            const actionPlanBtn = document.getElementById('generate-action-plan-btn');
-            actionPlanBtn.classList.remove('hidden');
-            actionPlanBtn.dataset.analysisText = text; 
-            actionPlanBtn.disabled = false; 
-        } catch (error) { 
-            showError(contentContainer, error); 
-        } finally { 
-            genButton.disabled = false; 
-        }
-    }
-
-    function parseMarkdownTableToCsv(markdownTableText) {
-        if (!markdownTableText || typeof markdownTableText !== 'string') return "";
-        const lines = markdownTableText.trim().split('\n');
-        if (lines.length < 1) return "";
-
-        const csvRows = [];
-        const escapeCsvCell = (cell) => {
-            let cleanedCell = cell.trim();
-            if (cleanedCell.includes(',') || cleanedCell.includes('\n') || cleanedCell.includes('"')) {
-                cleanedCell = `"${cleanedCell.replace(/"/g, '""')}"`;
-            }
-            return cleanedCell;
-        };
-
-        let isTableContent = false;
-        lines.forEach((line, index) => {
-            line = line.trim();
-            if (!line.startsWith('|') || !line.endsWith('|')) {
-                if (isTableContent) isTableContent = false;
-                return;
-            }
-            isTableContent = true;
-
-            if (line.match(/^\|[-:|'\s]+\|$/) && line.includes('-')) {
-                 if (index === 0) return;
-                 const prevLine = lines[index-1]?.trim();
-                 if (prevLine && prevLine.startsWith('|') && !prevLine.match(/^\|[-:|'\s]+\|$/)) {
-                    return;
-                 }
-            }
-
-            const cells = line.slice(1, -1).split('|').map(escapeCsvCell);
-            if (cells.length > 0 && cells.some(cell => cell.trim() !== '')) {
-                csvRows.push(cells.join(','));
-            }
-        });
-
-        return csvRows.join('\n');
-    }
-
-    function downloadCsv(csvString, filename) {
-        try {
-            const blob = new Blob(["\uFEFF" + csvString], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", filename);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-            showToast("Download do CSV iniciado com sucesso.", "success");
-        } catch (e) {
-            console.error("Falha no download:", e);
-            showToast("Não foi possível realizar o download automático do CSV.", "warning");
-        }
-    }
-
-    async function generateActionPlan(goal, analysisText, currentSelectedYear, currentPeriodText) {
-        const contentContainer = document.getElementById('action-plan-content');
-        const genButton = document.getElementById('generate-action-plan-btn');
-        const exportCsvButton = document.getElementById('export-action-plan-csv-btn');
-
-        genButton.disabled = true;
-        if (exportCsvButton) exportCsvButton.classList.add('hidden');
-        (document.getElementById('action-plan-container')).classList.remove('hidden');
-        showLoading(contentContainer, "Elaborando plano de ação com base na análise...");
-
-        const prompt = `
-            Com base na meta e na análise qualitativa fornecida, crie um plano de ação detalhado.
-            Apresente o plano em uma tabela Markdown com as seguintes colunas: 
-            "Ação Proposta", "Responsável Sugerido (Setor/Área)", "Prazo Sugerido (Ex: Curto, Médio, Longo Prazo)", "Recursos Necessários (Principais)".
-
-            **Meta ID:** ${goal.id}
-            **Título da Meta:** ${goal.title}
-
-            **Análise Qualitativa Fornecida:**
-            ---
-            ${analysisText}
-            ---
-
-            Instruções:
-            * As ações devem ser práticas e alinhadas ao SUS municipal.
-            * Formate a resposta exclusivamente com a tabela Markdown, sem textos adicionais antes ou depois.
-        `;
-        try {
-            const markdownText = await callGeminiAPI(prompt);
-            const converter = new showdown.Converter({tables: true, openLinksInNewWindow: true, simplifiedAutoLink: true, strikethrough: true});
-            contentContainer.innerHTML = converter.makeHtml(markdownText);
-
-            const csvContent = parseMarkdownTableToCsv(markdownText);
-            if (exportCsvButton) {
-                if (csvContent && csvContent.trim() !== "") {
-                    exportCsvButton.classList.remove('hidden');
-                    exportCsvButton.onclick = () => {
-                        const filename = `Plano_Acao_Meta_${goal.id}_${currentSelectedYear}_${currentPeriodText.replace(/º RDQA/g, 'Q').replace(/\s+/g, '_')}.csv`;
-                        downloadCsv(csvContent, filename);
-                    };
-                } else {
-                    exportCsvButton.classList.add('hidden');
-                }
-            }
-        } catch (error) {
-            showError(contentContainer, error);
-            if (exportCsvButton) exportCsvButton.classList.add('hidden');
-        } finally {
-            genButton.disabled = false;
-        }
-    }
-
     async function exportModalContentToPDF(goal, selectedYear, periodText) {
         const { jsPDF } = window.jspdf || {};
         if (!jsPDF) {
@@ -1302,21 +1007,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const modalContentForExport = document.getElementById('ai-export-content');
-        const modalTitleText = `Análise da Meta ${goal.id}: ${goal.title}`;
+        const modalContentForExport = document.getElementById('goal-export-content');
+        const modalTitleText = `Meta ${goal.id}: ${goal.title}`;
         const modalSubtitleText = `RAG ${selectedYear} - ${periodText}`;
     
         if (!modalContentForExport) {
             showToast("Conteúdo para exportação não encontrado.", "warning");
             return;
-        }
-    
-        const actionPlanContainer = document.getElementById('action-plan-container');
-        const actionPlanContentElement = document.getElementById('action-plan-content');
-        const actionPlanWasHidden = actionPlanContainer.classList.contains('hidden');
-        
-        if (actionPlanWasHidden && actionPlanContentElement && actionPlanContentElement.innerHTML.trim() !== '') {
-            actionPlanContainer.classList.remove('hidden');
         }
     
         const exportButton = document.getElementById('export-pdf-btn');
@@ -1344,13 +1041,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const contentWidth = pdfWidth - 2 * margin;
     
             let currentY = margin;
-            pdf.setFontSize(14);
+            pdf.setFontSize(13);
             pdf.setTextColor(40, 40, 40);
             const titleLines = pdf.splitTextToSize(modalTitleText, contentWidth);
             pdf.text(titleLines, margin, currentY + 5);
             currentY += titleLines.length * 6 + 5; 
     
-            pdf.setFontSize(11);
+            pdf.setFontSize(10);
             pdf.setTextColor(100, 100, 100);
             const subtitleLines = pdf.splitTextToSize(modalSubtitleText, contentWidth);
             pdf.text(subtitleLines, margin, currentY);
@@ -1400,15 +1097,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 canvasCutPositionY += canvasSliceHeight;
                 canvasHeightRemaining -= canvasSliceHeight;
             }
-            pdf.save(`Analise_Meta_${goal.id}_${selectedYear}_${periodText.replace(/º RDQA/g, 'Q').replace(/\s+/g, '_')}.pdf`);
+            pdf.save(`Relatorio_Meta_${goal.id}_${selectedYear}_${periodText.replace(/º RDQA/g, 'Q').replace(/\s+/g, '_')}.pdf`);
             showToast("Relatório PDF baixado com sucesso!", "success");
         } catch (error) {
             console.error("Error generating PDF:", error);
             showToast("Falha ao gerar o documento PDF.", "error");
         } finally {
-            if (actionPlanWasHidden && actionPlanContainer) {
-                actionPlanContainer.classList.add('hidden');
-            }
             exportButton.disabled = false;
             exportButton.innerHTML = originalButtonText;
         }
@@ -1468,7 +1162,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <button id="close-modal" aria-label="Fechar modal" class="text-gray-500 text-3xl leading-none hover:text-gray-800">&times;</button>
                 </div>
-                <div class="space-y-4">
+                
+                <div id="goal-export-content" class="space-y-4">
                     <p class="text-lg text-gray-700 font-medium">${goal.title}</p>
                     <div class="text-sm text-gray-600 flex items-center">
                         ${goal.polaridade === 'maior' ? '<span class="text-green-500 mr-2 text-xl">📈</span> Meta de crescimento' : '<span class="text-red-500 mr-2 text-xl">📉</span> Meta de redução'}
@@ -1504,27 +1199,15 @@ document.addEventListener('DOMContentLoaded', () => {
                             <p class="text-xs text-purple-600 mt-1">Variação</p>
                         </div>
                     </div>
-                    
-                    <div class="mt-8 pt-6 border-t">
-                        <div id="ai-export-content">
-                            <div id="qualitative-analysis-container" class="mb-6">
-                                <h3 class="text-xl font-bold text-gray-800 mb-4">Análise Qualitativa com IA ✨</h3>
-                                <div id="qualitative-analysis-content" class="ai-content text-gray-700 leading-relaxed min-h-[5rem]" aria-live="polite">
-                                    <p class="text-sm text-gray-500 italic">Clique em "Gerar Análise" abaixo para obter o diagnóstico inteligente da meta.</p>
-                                </div>
-                            </div>
-                            <div id="action-plan-container" class="hidden mb-6">
-                                <h3 class="text-xl font-bold text-gray-800 mb-4">Plano de Ação com IA ✨</h3>
-                                <div id="action-plan-content" class="ai-content text-gray-700 leading-relaxed min-h-[5rem]" aria-live="polite"></div>
-                                <button id="export-action-plan-csv-btn" class="hidden mt-4 w-full sm:w-auto bg-teal-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700">Exportar Plano para CSV</button>
-                            </div>
-                        </div>
-                        <div class="flex flex-col sm:flex-row gap-4 mt-4">
-                            <button id="generate-analysis-btn" class="w-full sm:w-auto flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700">Gerar Análise</button>
-                            <button id="generate-action-plan-btn" class="w-full sm:w-auto flex-1 hidden bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700">Elaborar Plano de Ação</button>
-                            <button id="export-pdf-btn" class="w-full sm:w-auto flex-1 bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700">Exportar para PDF</button>
-                        </div>
-                    </div>
+                </div>
+
+                <div class="mt-8 pt-4 border-t flex flex-col sm:flex-row justify-end gap-3">
+                    <button id="export-pdf-btn" class="w-full sm:w-auto bg-green-600 text-white font-bold py-2.5 px-6 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Exportar para PDF
+                    </button>
                 </div>
             </div>`;
         modal.classList.remove('hidden');
@@ -1534,15 +1217,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeModalBtn = document.getElementById('close-modal');
         closeModalBtn.addEventListener('click', () => {
             modal.classList.add('hidden');
-        });
-        (document.getElementById('generate-analysis-btn')).addEventListener('click', () => generateQualitativeAnalysis(goal, resultForModal, statusForModal, periodText, selectedYear));
-        (document.getElementById('generate-action-plan-btn')).addEventListener('click', (e) => {
-            const analysisText = (e.currentTarget).dataset.analysisText;
-            if (analysisText) {
-                generateActionPlan(goal, analysisText, selectedYear, periodText);
-            } else {
-                showError(document.getElementById('action-plan-content'), { message: "Análise qualitativa não encontrada. Gere a análise primeiro." });
-            }
         });
         (document.getElementById('export-pdf-btn')).addEventListener('click', () => exportModalContentToPDF(goal, selectedYear, periodText));
         

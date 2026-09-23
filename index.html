@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -59,39 +60,46 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-    <!-- Header -->
-   <header class="bg-white shadow-md">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center space-x-4">
-            <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
-            <h1 id="header-title" class="text-2xl font-bold text-gray-800">Painel de Monitoramento RAG V.01</h1>
-        </div>
-        <div class="flex items-center space-x-6">
-            <div class="flex flex-col items-end space-y-0">
-                <span class="text-sm text-gray-500">Instrumento de Gestão do SUS</span>
-                <span class="text-base text-blue-700 font-semibold leading-tight">Parauapebas-PA</span>
-            </div>
-            <a href="https://drive.google.com/uc?export=download&id=1s7rHeQYqYhZqTiYfHms_UHR5Gs3MAiRT" 
-               target="_blank" 
-               rel="noopener noreferrer"
-               class="flex items-center bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 shadow-sm hover:shadow-md">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-6 py-4 flex flex-wrap justify-between items-center gap-4">
+            <div class="flex items-center space-x-4">
+                <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                 </svg>
-                Baixar Plano Municipal de Saúde 2022 a 2025
-            </a>
+                <div>
+                    <h1 id="header-title" class="text-2xl font-bold text-gray-800">Painel de Monitoramento RAG V.01</h1>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-gray-500">Instrumento de Gestão do SUS</span>
+                        <span class="text-xs bg-blue-100 text-blue-800 font-semibold px-2 py-0.5 rounded">Parauapebas-PA</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button id="config-api-btn" class="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-3 rounded-lg text-sm transition-colors border border-gray-300">
+                    <svg class="w-4 h-4 mr-1 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
+                    </svg>
+                    Chave de API
+                </button>
+                <a href="https://drive.google.com/uc?export=download&id=1s7rHeQYqYhZqTiYfHms_UHR5Gs3MAiRT" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="flex items-center bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 shadow-sm text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                    Plano de Saúde (PMS)
+                </a>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
-
-    <!-- Main Content -->
     <main class="container mx-auto p-6">
         
         <!-- Filters -->
         <div class="bg-white p-4 rounded-lg shadow-sm mb-6 flex flex-col space-y-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                 <div class="relative w-full">
+                <div class="relative w-full">
                     <input type="text" id="search-input" placeholder="Buscar por ID ou palavra-chave..." class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -115,7 +123,7 @@
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                 <div>
+                <div>
                     <select id="diretriz-filter" aria-label="Diretriz" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
                         <option value="todas">Todas</option>
                     </select>
@@ -154,6 +162,28 @@
         </div>
     </main>
 
+    <!-- Modal for API Key Configuration -->
+    <div id="api-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6 modal-enter">
+            <div class="flex justify-between items-center mb-4 pb-2 border-b">
+                <h3 class="text-lg font-bold text-gray-800">Configuração de Chave de API</h3>
+                <button id="close-api-modal" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+            </div>
+            <p class="text-sm text-gray-600 mb-4">
+                Insira sua chave do Google Gemini para habilitar análises inteligentes e planos de ação. A chave é salva localmente no navegador.
+            </p>
+            <div class="space-y-3">
+                <label for="gemini-api-key-input" class="block text-xs font-semibold text-gray-700 uppercase">Chave de API Gemini</label>
+                <input type="password" id="gemini-api-key-input" placeholder="AIzaSy..." class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm">
+                <div id="api-key-feedback" class="text-xs hidden py-1"></div>
+            </div>
+            <div class="flex justify-end space-x-2 mt-6">
+                <button id="clear-api-key-btn" class="px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded transition-colors">Limpar Chave</button>
+                <button id="save-api-key-btn" class="px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white font-medium rounded transition-colors">Salvar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal for Goal Details & AI Analysis -->
     <div id="goal-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
         <div id="modal-content-wrapper" class="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[90vh] overflow-y-auto modal-enter">
@@ -161,96 +191,55 @@
         </div>
     </div>
 
+    <!-- Notification Toast Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
     <footer class="bg-gray-800 text-gray-300 py-4 text-center mt-auto">
         <p>Todos os direitos reservados © 2025 Frank Sinatra da Silva Muniz</p>
     </footer>
 
     <script type="importmap">
-{
-  "imports": {
-    "@google/genai": "https://esm.sh/@google/genai@^1.5.1",
-    "react/": "https://esm.sh/react@^19.1.0/"
-  }
-}
-</script>
+    {
+      "imports": {
+        "@google/genai": "https://esm.sh/@google/genai@^1.5.1"
+      }
+    }
+    </script>
     <script type="module">
-// Copyright 2024 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
 import { GoogleGenAI } from "@google/genai";
 
-// Initialize the GoogleGenAI client with the API key from environment variables
-const ai = new GoogleGenAI({apiKey: "AIzaSyBoxYjmcNkL3kk0aYcNRguL7dW0cLRtC4M"});
-
-// --- TYPE DEFINITIONS ---
-/*
-interface QuadrimestreData {
-    "1"?: string | number;
-    "2"?: string | number;
-    "3"?: string | number;
+// Secure API key retrieval: retrieved strictly from user-configured local storage or runtime environment
+function getStoredApiKey() {
+    return localStorage.getItem("GEMINI_API_KEY") || "";
 }
 
-interface YearlyGoalData {
-    esperado: string | number;
-    resultado: string | number;
-    quadrimestres: QuadrimestreData;
-    resultado_2022?: string | number;
-    resultado_2023?: string | number;
+function setStoredApiKey(key) {
+    if (key && key.trim()) {
+        localStorage.setItem("GEMINI_API_KEY", key.trim());
+    } else {
+        localStorage.removeItem("GEMINI_API_KEY");
+    }
 }
 
-interface Goal {
-    id: number;
-    title: string;
-    polaridade: string;
-    diretriz: string;
-    objetivo: string;
-    calculationMethod: string;
-    yearly_data: { [year: string]: YearlyGoalData };
+function showToast(message, type = "info") {
+    const container = document.getElementById("toast-container");
+    if (!container) return;
+    const toast = document.createElement("div");
+    const bgColors = {
+        success: "bg-green-600 text-white",
+        error: "bg-red-600 text-white",
+        info: "bg-blue-600 text-white",
+        warning: "bg-amber-600 text-white"
+    };
+    toast.className = `px-4 py-2 rounded-lg shadow-lg text-sm font-medium transition-all duration-300 pointer-events-auto ${bgColors[type] || bgColors.info}`;
+    toast.textContent = message;
+    container.appendChild(toast);
+    setTimeout(() => {
+        toast.style.opacity = "0";
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
 }
 
-interface RawQuadrimestreData {
-    "1": string | number;
-    "2": string | number;
-    "3": string | number;
-}
-
-interface RawGoalDataItem {
-    id: number;
-    title: string;
-    esperado: string | number;
-    resultado: string | number;
-    polaridade: string;
-    quadrimestres: RawQuadrimestreData;
-    resultado_2022?: string | number;
-    resultado_2023?: string | number;
-}
-
-interface RawObjetivoData {
-    [objetivoTitle: string]: RawGoalDataItem[];
-}
-
-interface RawDiretrizData {
-    [diretrizTitle: string]: RawObjetivoData;
-}
-
-interface RawDataSets {
-    [year: string]: RawDiretrizData;
-}
-*/
-
-// --- FULL DATASET ---
-// Data processed and consolidated from the provided CSV files.
 const dataSets = {
       "2022": {
         "Diretriz 1: Fortalecimento da Atenção Primária à Saúde e aprimoramento das Redes de Atenção à Saúde ampliando o acesso com qualidade e eficiência.": {
@@ -622,7 +611,7 @@ const dataSets = {
         }
       }
     };
-    
+
 const calculationMethods = {
     1: `(Estimativa populacional ACS∗575) 100 * nº ACS: Número de Agentes Comunitários de Saúde (CBO: 515105). Lotação: profissionais lotados em equipes da Estratégia Saúde da Família, Equipe de Atenção Básica desde que vinculadas aos estabelecimentos de saúde instituídas em sua respectiva portaria e cadastradas no SCNES. Parâmetro: Considera o valor de 575, resultado da média aritmética entre os valores mínimo e máximo definidos na PNAB 2011. Estimativa populacional: será considerada sempre a estimativa do ano anterior, e atualizada no mês de janeiro, para fins de cálculo do indicador.`,
     2: `Número de ações de apoio para assistência a população indígena`,
@@ -630,101 +619,100 @@ const calculationMethods = {
     4: `Numerador: Número de famílias beneficiárias do Programa Bolsa Família com perfil saúde acompanhadas pela atenção básica na última vigência do ano\nDenominador: Número total de famílias beneficiárias do Programa Bolsa Família com perfil saúde na última vigência do ano\nFator de multiplicação: 100`,
     5: `População cadastrada e vincula da às eSFs X 100 / População residente (IBGE)`,
     6: `População cadastrada e vincula da às eSFs e eAPs X 100 / População residente (IBGE)`,
-    7: `(Média de atend. indiv. x 0,15) + (Média de atend. domic. x 0,25) + (Média de atend. compart. x 0,25) + (Média de atend. grupo x 0,35)\nNúmero de profissionais do NASF a cada 40h\nO peso atribuído a cada indicador é:\nIndicador Peso\nMédia de atendimentos individuais registrado por profissional do NASF 0,15\nMédia de atendimentos individuais domiciliares por profissional de NASF 0,25\nMédia de atendimentos compartilhados por 0,25 81 profissional de NASF\nMédia de atendimentos em grupo por profissional de NASF 0,35\n“Média de atendimento individual realizado por profissional do NASF x 0,15” + “Média de atendimento domiciliar realizado por profissional do NASF x 0,25” + “Média de atendimento compartilhado realizado pelo NASF x 0,25” + “Média de atendimento em grupo realizado pelo NASF x 0,35”.\nDenominador: O número de profissionais do NASF será estabelecido através da soma da carga horária ambulatorial destes profissionais encontrada no CNES dividido por 40. Fonte: Sistema Nacional de Cadastro de Estabelecimento de Saúde (SCNES).`,
-    8: `Número de coletas realizadas x 100\nNúmero de consultas realizadas`,
-    9: `Quantidade de Crianças integrantes do Programa APLV X 100\nQuantidade de Crianças integrantes do Programa APLV em 2020`,
-    10: `Número de nascidos vivos de mães adolescentes de 10 a 19 anos residentes em determinado local e período X 100\nNúmero de nascidos vivos de mães residentes no mesmo local e período\nNumerador: Número de nascidos vivos de mães adolescentes de 10 a 19 anos residentes em determinado local e período\nDenominador: Número de nascidos vivos de mães residentes no mesmo local e período.\nFator de multiplicação: 100`,
-    11: `(𝑁º 𝑑𝑒 3ª 𝑑𝑜𝑠𝑒𝑠 𝑎𝑝𝑙𝑖𝑐𝑎𝑑𝑎𝑠 𝑑𝑒 𝑃𝑜𝑙𝑖𝑜 𝑒 𝑃𝑒𝑛𝑡𝑎 𝑒𝑚 𝑚𝑒𝑛𝑜𝑟𝑒𝑠 𝑑𝑒 1 𝑎𝑛𝑜 / ( 𝑃𝑎𝑟𝑎𝑚ê𝑡𝑟𝑜 𝑑𝑒 𝐶𝑎𝑑𝑎𝑠𝑡𝑟𝑜 𝑃𝑜𝑝𝑢𝑙𝑎çã𝑜 𝐼𝐵𝐺𝐸 × 𝑆𝐼𝑁𝐴𝑆𝐶 𝒐𝒖 𝑁º 𝑐𝑟𝑖𝑎𝑛ç𝑎𝑠 𝑐𝑎𝑑𝑎𝑠𝑡𝑟𝑎𝑑𝑎𝑠))¹\n¹ O denominador será o que apresentar o maior valor\nNumerador: Considera-se o menor número de doses aplicadas entre a 3ª doses de pólio ou 3ª dose de pentavalente em menores de 1 ano\nDenominador: Será considerado a mensuração que obtiver o maior resultado: 1- O menor resultado de quadrimestre da quantidade de nascidos vivos do município no período de 2014 a 2017 (apresentado no TABNET), com a correção da proporção do parâmetro de cadastro (apresentado no Painel de cadastro, número obtido com base na tipologia do município, levando em consideração a população IBGE) em relação à população IBGE do município, ou 2- Quantidade de crianças menores de 1 ano cadastradas, identificadas e vinculadas corretamente no município no período.`,
-    12: `(𝑁º 𝑑𝑖𝑎𝑏é𝑡𝑖𝑐𝑜𝑠 𝑐𝑜𝑚 𝑠𝑜𝑙𝑖𝑐𝑖𝑡𝑎çã𝑜 𝑑𝑒 𝐻𝑏𝐴1𝑐 𝑛𝑜𝑠 ú𝑙𝑡𝑖𝑚𝑜𝑠 12 𝑚𝑒𝑠𝑒𝑠 / (𝑃𝑎𝑟𝑎𝑚ê𝑡𝑟𝑜 𝑑𝑒 𝐶𝑎𝑑𝑎𝑠𝑡𝑟𝑜 × % 𝑑𝑖𝑎𝑏é𝑡𝑖𝑐𝑜𝑠 𝑃𝑁𝑆 𝒐𝒖 𝑁º 𝑑𝑖𝑎𝑏é𝑡𝑖𝑐𝑜𝑠 𝑖𝑑𝑒𝑛𝑡𝑖𝑓𝑖𝑐𝑎𝑑𝑜𝑠))¹\nNumerador: Número de cadastrados identificados e vinculados corretamente nesta equipe com atendimento onde o problema condição avaliada foi a diabetes com a solicitação de Hemoglobina Glicada no intervalo de 12 meses (podendo ser marcação de campo rápido ou seleção do CID/SIGTAP correspondente).\nDenominador: Será considerado a mensuração que obtiver o maior resultado: 1- A porcentagem de diabéticos diagnosticados do estado na PNS de 2013 (apresentado no TABNET) vezes o parâmetro de cadastro (apresentado no Painel de cadastro, número obtido com base na tipologia do município, levando em consideração a população IBGE), ou 2- Quantidade de diabéticos cadastrados, identificados e vinculados corretamente na equipe no período.`,
-    13: `(𝑁º𝑔𝑒𝑠𝑡𝑎𝑛𝑡𝑒𝑠 𝑐𝑜𝑚 6 𝑐𝑜𝑛𝑠𝑢𝑙𝑡𝑎𝑠 𝑝𝑟é − 𝑛𝑎𝑡𝑎𝑙, 𝑐𝑜𝑚 1ª 𝑎𝑡é 20 𝑠𝑒𝑚𝑎𝑛𝑎𝑠 𝑑𝑒 𝑔𝑒𝑠𝑡𝑎ção / (𝑃𝑎𝑟𝑎𝑚ê𝑡𝑟𝑜 𝑑𝑒 𝐶𝑎𝑑𝑎𝑠𝑡𝑟𝑜 𝑃𝑜𝑝𝑢𝑙𝑎çã𝑜 𝐼𝐵𝐺𝐸 × 𝑆𝐼𝑁𝐴𝑆𝐶 𝒐𝒖 𝑁º 𝑔𝑒𝑠𝑡𝑎𝑛𝑡𝑒𝑠 𝑖𝑑𝑒𝑛𝑡𝑖𝑓𝑖𝑐𝑎𝑑𝑎𝑠))¹\n¹ O denominador será o que apresentar o maior valor\nNumerador: Número de mulheres com gestações finalizadas no período, cadastradas, identificadas e vinculadas corretamente nesta equipe com pelo menos 6 atendimentos onde o problema condição avaliada foi o pré-natal (podendo ser marcação de campo rápido ou seleção do CID/CIAP correspondente),sendo que a primeira consulta realizada possui uma diferença de no máximo 20 semanas da data da DUM registrada no atendimento.\nDenominador: Será considerado a mensuração que obtiver o maior resultado: 1- O menorresultado de quadrimestre da quantidade de nascidos vivos do município no período de 2014 a 2017 (apresentado no TABNET), com a correção da proporção do parâmetro de cadastro (apresentado no Painel de cadastro, número obtido com base na tipologia do município, levando em consideração a população IBGE) em relação à população IBGE do município, ou 2- Quantidade de gestantes cadastradas, identificadas e vinculadas corretamente na equipe com gestações finalizadas (considerando a data provável do parto (DPP) + 14 dias) no período.`,
-    14: `(𝑁º𝑔𝑒𝑠𝑡𝑎𝑛𝑡𝑒𝑠 𝑐𝑜𝑚 𝑠𝑜𝑟𝑜𝑙𝑜𝑔𝑖𝑎 𝑎𝑣𝑎𝑙𝑖𝑎𝑑𝑎 𝑜𝑢 𝑡𝑒𝑠𝑡𝑒 𝑟á𝑝𝑖𝑑𝑜 𝑟𝑒𝑎𝑙𝑖𝑧𝑎𝑑𝑜 𝑝𝑎𝑟𝑎 𝐻𝐼𝑉 𝑒 𝑆𝐼𝐹𝐼𝐿𝐼𝑆 / (𝑃𝑎𝑟𝑎𝑚ê𝑡𝑟𝑜 𝑑𝑒 𝐶𝑎𝑑𝑎𝑠𝑡𝑟𝑜 𝑃𝑜𝑝𝑢𝑙𝑎çã𝑜 𝐼𝐵𝐺𝐸 × 𝑆𝐼𝑁𝐴𝑆𝐶 𝒐𝒖 𝑁º 𝑔𝑒𝑠𝑡𝑎𝑛𝑡𝑒𝑠 𝑖𝑑𝑒𝑛𝑡𝑖𝑓𝑖𝑐𝑎𝑑𝑎𝑠))¹\n¹ O denominador será o que apresentar o maior valor\nNumerador: Número de mulheres com gestações finalizadas no período, cadastradas, identificadas e vinculadas corretamente nesta equipe que tiveram um atendimento individual Exame avaliado com exame avaliado de Sorologia de Sífilis (VDRL), ou realizou o procedimento de teste rápido para Sífilis e avaliou o exame de Sorologia de HIV ou realizou o procedimento de teste rápido para HIV (é aceito a marcação do campo rápido ou o SIGTAP correspondente em ambos os casos)\nDenominador: Será considerado a mensuração que obtiver o maior resultado: 1- O menor resultado de quadrimestre da quantidade de nascidos vivos do município no período de 2014 a 2017 (apresentado no TABNET), com a correção da proporção do parâmetro de cadastro (apresentado no Painel de cadastro, número obtido com base na tipologia do município, levando em consideração a população IBGE) em relação à população IBGE do município, ou 2- Quantidade de gestantes cadastradas, identificadas e vinculadas corretamente na equipe com gestações finalizadas (considerando a data provável)`,
-    15: `(𝑁º ℎ𝑖𝑝𝑒𝑟𝑡𝑒𝑛𝑠𝑜𝑠 𝑐𝑜𝑚 𝑝𝑟𝑒𝑠𝑠ã𝑜 𝑎𝑟𝑡𝑒𝑟𝑖𝑎𝑙 𝑎𝑓𝑒𝑟𝑖𝑑𝑎 𝑝𝑒𝑙𝑜 𝑚𝑒𝑛𝑜𝑠 1 𝑣𝑒𝑧 𝑝𝑜𝑟 𝑠𝑒𝑚𝑒𝑠𝑡𝑟𝑒 / (𝑃𝑎𝑟𝑎𝑚ê𝑡𝑟𝑜 𝑑𝑒 𝐶𝑎𝑑𝑎𝑠𝑡𝑟𝑜 × % ℎ𝑖𝑝𝑒𝑟𝑡𝑒𝑛𝑠𝑜𝑠 𝑃𝑁𝑆 𝑜𝑢 𝑁º ℎ𝑖𝑝𝑒𝑟𝑡𝑒𝑛𝑠𝑜𝑠 𝑖𝑑𝑒𝑛𝑡𝑖𝑓𝑖𝑐𝑎𝑑𝑜𝑠))¹\n¹ O denominador será o que apresentar o maior valor\nNumerador: Número de cadastrados identificados e vinculados corretamente nesta equipe com atendimento onde o problema condição avaliada foi a hipertensão e a pressão arterial foi aferida pelo menos uma vez no semestre (podendo ser marcação de campo rápido ou seleção do CID/SIGTAP correspondente).\nDenominador: Será considerado a mensuração que obtiver o maior resultado: 1- A porcentagem de hipertensos diagnosticados do estado na PNS de 2013 (apresentado no TABNET) vezes o parâmetro de cadastro (apresentado no Painel de cadastro, número obtido com base na tipologia do município, levando em consideração a população IBGE), ou 2- Quantidade de hipertensos cadastrados, identificados e vinculados corretamente na equipe no período.`,
-    16: `(𝑁º𝑔𝑒𝑠𝑡𝑎𝑛𝑡𝑒𝑠 𝑐𝑜𝑚 𝑎𝑡𝑒𝑛𝑑𝑖𝑚𝑒𝑛𝑡𝑜 𝑜𝑑𝑜𝑛𝑡𝑜𝑙ó𝑔𝑖𝑐𝑜 / (𝑃𝑎𝑟𝑎𝑚ê𝑡𝑟𝑜 𝑑𝑒 𝐶𝑎𝑑𝑎𝑠𝑡𝑟𝑜 𝑃𝑜𝑝𝑢𝑙𝑎çã𝑜 𝐼𝐵𝐺𝐸 × 𝑆𝐼𝑁𝐴𝑆𝐶 𝒐𝒖 𝑁º 𝑔𝑒𝑠𝑡𝑎𝑛𝑡𝑒𝑠 𝑖𝑑𝑒𝑛𝑡𝑖𝑓𝑖𝑐𝑎𝑑𝑎𝑠))¹\n¹ O denominador será o que apresentar o maior valor\nNumerador: Número de mulheres com gestações finalizadas no período, cadastradas, identificadas e vinculadas corretamente nesta equipe com pelo menos 1 atendimento onde o problema condição avaliada no atendimento foi o pré-natal odontológico (podendo ser marcação de campo rápido ou seleção do CID/CIAP correspondente).\nDenominador: Será considerado a mensuração que obtiver o maior resultado: 1- O menor resultado de quadrimestre da quantidade de nascidos vivos do município no período de 2014 a 2017 (apresentado no TABNET), com a correção da proporção do parâmetro de cadastro (apresentado no Painel de cadastro, número obtido com base na tipologia do município, levando em consideração a população IBGE) em relação à população IBGE do município, ou 2- Quantidade de gestantes cadastradas, identificadas e vinculadas corretamente na equipe com gestações finalizadas (considerando a data provável do parto (DPP) + 14 dias) no período.`,
-    17: `Acesso à atenção odontológica na Atenção Básica: Número de pessoas que tiveram um atendimento odontológico na atenção básica de forma individual, em grupo ou procedimento odontológico coletivo, em relação ao número total de usuários da atenção básica que realizaram pelo menos 1 atendimento médico ou de enfermagem individual no período.\nNumerador: Número de atendimentos odontológicos individuais, em grupo ou procedimentos odontológicos coletivos registrados por cirurgião dentista (CBO: 223208) em unidades de saúde da atenção básica.\nDenominador: Total de usuários da atenção básica que realizaram pelo menos 1 atendimento médico ou de enfermagem individual no período, com exceção dos atendimentos odontológicos.\nFator de multiplicação: 100`,
+    7: `(Média de atend. indiv. x 0,15) + (Média de atend. domic. x 0,25) + (Média de atend. compart. x 0,25) + (Média de atend. grupo x 0,35)\nNúmero de profissionais do NASF a cada 40h`,
+    8: `Número de coletas realizadas x 100 / Número de consultas realizadas`,
+    9: `Quantidade de Crianças integrantes do Programa APLV X 100 / Quantidade de Crianças integrantes do Programa APLV em 2020`,
+    10: `Número de nascidos vivos de mães adolescentes de 10 a 19 anos residentes em determinado local e período X 100 / Número de nascidos vivos de mães residentes no mesmo local e período`,
+    11: `(𝑁º 𝑑𝑒 3ª 𝑑𝑜𝑠𝑒𝑠 𝑎𝑝𝑙𝑖𝑐𝑎𝑑𝑎𝑠 𝑑𝑒 𝑃𝑜𝑙𝑖𝑜 𝑒 𝑃𝑒𝑛𝑡𝑎 𝑒𝑚 𝑚𝑒𝑛𝑜𝑟𝑒𝑠 𝑑𝑒 1 𝑎𝑛𝑜 / Denominador populacional) * 100`,
+    12: `(𝑁º 𝑑𝑖𝑎𝑏é𝑡𝑖𝑐𝑜𝑠 𝑐𝑜𝑚 𝑠𝑜𝑙𝑖𝑐𝑖𝑡𝑎çã𝑜 𝑑𝑒 𝐻𝑏𝐴1𝑐 𝑛𝑜𝑠 ú𝑙𝑡𝑖𝑚𝑜𝑠 12 𝑚𝑒𝑠𝑒𝑠 / Denominador pactuado)`,
+    13: `(𝑁º 𝑔𝑒𝑠𝑡𝑎𝑛𝑡𝑒𝑠 𝑐𝑜𝑚 6 𝑐𝑜𝑛𝑠𝑢𝑙𝑡𝑎𝑠 𝑝𝑟é-𝑛𝑎𝑡𝑎𝑙, 1ª até 20ª sem / Denominador SINASC/IBGE)`,
+    14: `(𝑁º 𝑔𝑒𝑠𝑡𝑎𝑛𝑡𝑒𝑠 𝑐𝑜𝑚 𝑠𝑜𝑟𝑜𝑙𝑜𝑔𝑖𝑎 𝑎𝑣𝑎𝑙𝑖𝑎𝑑𝑎 ou teste HIV/Sífilis / Denominador SINASC)`,
+    15: `(𝑁º ℎ𝑖𝑝𝑒𝑟𝑡𝑒𝑛𝑠𝑜𝑠 com PA aferida no semestre / Denominador pactuado)`,
+    16: `(𝑁º 𝑔𝑒𝑠𝑡𝑎𝑛𝑡𝑒𝑠 com atendimento odontológico / Denominador SINASC)`,
+    17: `Acesso à atenção odontológica na Atenção Básica: Consultas e procedimentos odontológicos / Total de usuários atendidos`,
     18: `Número de UBS que implantaram o prontuário eletrônico X 100 / Número total de UBS`,
     19: `Número de Unidades Básicas de Saúde de Zona Urbana com cuidado farmacêutico X 100 / Número de Unidades Básicas de Saúde de Zona Urbana`,
     20: `Número de Farmácia Viva implantada no município`,
     21: `Número de Unidades Básicas de Saúde com fitoterapia X 100 / Número total de Unidades Básicas de Saúde`,
     22: `Número de ações promovidas para o uso racional de medicamentos`,
-    23: `(𝑁º 𝑑𝑒 ó𝑏𝑖𝑡𝑜𝑠 𝑑𝑒 𝑐𝑟𝑖𝑎𝑛ç𝑎𝑠 𝑚𝑒𝑛𝑜𝑟𝑒𝑠 𝑑𝑒 1 𝑎𝑛𝑜 𝑑𝑒 𝑖𝑑𝑎𝑑𝑒 𝑟𝑒𝑠𝑖𝑑𝑒𝑛𝑡𝑒𝑠 / 𝑁º 𝑑𝑒 𝑁𝑎𝑠𝑐𝑖𝑑𝑜𝑠 𝑉𝑖𝑣𝑜𝑠 𝑟𝑒𝑠𝑖𝑑𝑒𝑛𝑡𝑒𝑠) ∗ 1000\nNumerador: Número de óbitos de crianças menores de 1 ano de idade residentes em determinado local e período.\nDenominador: Número de nascidos vivos residentes no mesmo local e período.\nFator de multiplicação: 1000`,
-    24: `(𝑁º 𝑑𝑒 ó𝑏𝑖𝑡𝑜𝑠 𝑚𝑎𝑡𝑒𝑟𝑛𝑜𝑠 𝑟𝑒𝑠𝑖𝑑𝑒𝑛𝑡𝑒𝑠 / 𝑁º 𝑑𝑒 𝑁𝑎𝑠𝑐𝑖𝑑𝑜𝑠 𝑉𝑖𝑣𝑜𝑠 𝑟𝑒𝑠𝑖𝑑𝑒𝑛𝑡𝑒𝑠) ∗ 100000\nNumerador: Óbitos maternos (CID-10, A34; O00-08; O10-16; O20-23; O24.4; O25-26; O28-29; O30-48; O60-75; O85-92; O95-99).\nDenominador: Nascidos vivos (SINASC), corrigido pela proporção do parâmetro de cadastro, ou seja, população IBGE x a porcentagem da população cadastrada, no intuito de incentivar o registro correto de todos os usuários da APS mesmo que possa afetar o resultado do indicador.\nFator de multiplicação: 100000`,
+    23: `(𝑁º de óbitos em menores de 1 ano / Nº de Nascidos Vivos) * 1000`,
+    24: `(𝑁º de óbitos maternos / Nº de Nascidos Vivos) * 100000`,
     25: `Número de nascidos vivos de parto normal X 100 / Número total de nascidos vivos no SUS`,
-    26: `Número de casos de sífilis congênita notificados em menores de 1 ano de idade residentes X 1000 / Número de nascidos vivos`,
-    27: `(𝑁º 𝑑𝑒 𝑁𝑎𝑠𝑐𝑖𝑑𝑜𝑠 𝑉𝑖𝑣𝑜𝑠 𝑟𝑒𝑠𝑖𝑑𝑒𝑛𝑡𝑒𝑠 / 𝑃𝑜𝑝𝑢𝑙𝑎çã𝑜 𝑇𝑜𝑡𝑎𝑙) ∗ 1000\nNumerador: Número de nascidos vivos de residentes em determinado local e período.\nDenominador: População total residente no mesmo local e período.\nFator de multiplicação: 1000`,
-    28: `(𝑁º 𝑑𝑒 𝐼𝑛𝑡𝑒𝑟𝑛𝑎çõ𝑒𝑠 𝑝𝑜𝑟 𝐶𝑜𝑛𝑑𝑖çõ𝑒𝑠 𝑆𝑒𝑛𝑠í𝑣𝑒𝑖𝑠 à 𝐴𝑡𝑒𝑛çã𝑜 𝑃𝑟𝑖𝑚á𝑟𝑖𝑎 / 𝑃𝑜𝑝𝑢𝑙𝑎çã𝑜 𝑇𝑜𝑡𝑎𝑙) ∗ 10000\nNumerador: Número de internações por Condições Sensíveis à Atenção Primária (CSAP) em determinado local e período.\nDenominador: População total residente no mesmo local e período.\nFator de multiplicação: 10000`,
-    29: `(𝑁º 𝑑𝑒 𝑚𝑢𝑙ℎ𝑒𝑟𝑒𝑠 𝑑𝑒 25 𝑎 64 𝑎𝑛𝑜𝑠 𝑐𝑜𝑚 𝑝𝑒𝑙𝑜 𝑚𝑒𝑛𝑜𝑠 1 𝑒𝑥𝑎𝑚𝑒 𝑐𝑖𝑡𝑜𝑝𝑎𝑡𝑜𝑙ó𝑔𝑖𝑐𝑜 𝑟𝑒𝑎𝑙𝑖𝑧𝑎𝑑𝑜 𝑛𝑜𝑠 ú𝑙𝑡𝑖𝑚𝑜𝑠 36 𝑚𝑒𝑠𝑒𝑠 / 𝑁º 𝑑𝑒 𝑚𝑢𝑙ℎ𝑒𝑟𝑒𝑠 𝑑𝑒 25 𝑎 64 𝑎𝑛𝑜𝑠 𝑐𝑎𝑑𝑎𝑠𝑡𝑟𝑎𝑑𝑎𝑠 𝑖𝑑𝑒𝑛𝑡𝑖𝑓𝑖𝑐𝑎𝑑𝑎𝑠 𝑒 𝑣𝑖𝑛𝑐𝑢𝑙𝑎𝑑𝑎𝑠)¹\n¹ O denominador será o que apresentar o maior valor\nNumerador: Número de mulheres de 25 a 64 anos cadastradas, identificadas e vinculadas corretamente nesta equipe que realizaram um atendimento onde o problema condição avaliada foi a saúde da mulher e o exame citopatológico (podendo ser marcação de campo rápido ou seleção do CID/SIGTAP correspondente) foi realizado nos últimos 36 meses.\nDenominador: Será considerado a mensuração que obtiver o maior resultado: 1- A porcentagem de mulheres do estado na PNS de 2013 (apresentado no TABNET) vezes o parâmetro de cadastro (apresentado no Painel de cadastro, número obtido com base na tipologia do município, levando em consideração a população IBGE) em relação à população IBGE do município, ou 2- Quantidade de mulheres de 25 a 64 anos cadastradas, identificadas e vinculadas corretamente na equipe no período.`,
-    30: `(𝑁º 𝑑𝑒 𝑚𝑎𝑚𝑜𝑔𝑟𝑎𝑓𝑖𝑎𝑠 𝑑𝑒 𝑟𝑎𝑠𝑡𝑟𝑒𝑎𝑚𝑒𝑛𝑡𝑜 𝑒𝑚 𝑚𝑢𝑙ℎ𝑒𝑟𝑒𝑠 𝑑𝑒 50 𝑎 69 𝑎𝑛𝑜𝑠 𝑟𝑒𝑎𝑙𝑖𝑧𝑎𝑑𝑎𝑠 𝑛𝑜𝑠 ú𝑙𝑡𝑖𝑚𝑜𝑠 24 𝑚𝑒𝑠𝑒𝑠 / 𝑁º 𝑑𝑒 𝑚𝑢𝑙ℎ𝑒𝑟𝑒𝑠 𝑑𝑒 50 𝑎 69 𝑎𝑛𝑜𝑠 𝑐𝑎𝑑𝑎𝑠𝑡𝑟𝑎𝑑𝑎𝑠 𝑖𝑑𝑒𝑛𝑡𝑖𝑓𝑖𝑐𝑎𝑑𝑎𝑠 𝑒 𝑣𝑖𝑛𝑐𝑢𝑙𝑎𝑑𝑎𝑠)¹\n¹ O denominador será o que apresentar o maior valor\nNumerador: Número de mulheres de 50 a 69 anos cadastradas, identificadas e vinculadas corretamente nesta equipe que realizaram um atendimento onde o problema condição avaliada foi a saúde da mulher e a mamografia de rastreamento (podendo ser marcação de campo rápido ou seleção do CID/SIGTAP correspondente) foi realizada nos últimos 24 meses.\nDenominador: Será considerado a mensuração que obtiver o maior resultado: 1- A porcentagem de mulheres do estado na PNS de 2013 (apresentado no TABNET) vezes o parâmetro de cadastro (apresentado no Painel de cadastro, número obtido com base na tipologia do município, levando em consideração a população IBGE) em relação à população IBGE do município, ou 2- Quantidade de mulheres de 50 a 69 anos cadastradas, identificadas e vinculadas corretamente na equipe no período.`,
-    31: `(𝑁º 𝑑𝑒 ó𝑏𝑖𝑡𝑜𝑠 𝑝𝑜𝑟 𝐷𝐶𝑁𝑇 𝑒𝑚 𝑖𝑛𝑑𝑖𝑣í𝑑𝑢𝑜𝑠 𝑑𝑒 30 𝑎 69 𝑎𝑛𝑜𝑠 𝑟𝑒𝑠𝑖𝑑𝑒𝑛𝑡𝑒𝑠 / 𝑃𝑜𝑝𝑢𝑙𝑎çã𝑜 𝑑𝑒 30 𝑎 69 𝑎𝑛𝑜𝑠) ∗ 100000\nNumerador: Número de óbitos por Doenças Crônicas Não Transmissíveis (DCNT) em indivíduos de 30 a 69 anos residentes em determinado local e período.\nDenominador: População total de 30 a 69 anos residente no mesmo local e período.\nFator de multiplicação: 100000`,
-    32: `Nº de pessoas idosas que participam de atividades coletivas/grupais X 100 / Nº de pessoas idosas cadastradas na Atenção Primária`,
-    33: `Nº de equipes de eSF e eAP capacitadas em envelhecimento e saúde da pessoa idosa X 100 / Nº de equipes de eSF e eAP existentes na Atenção Primária`,
-    34: `Número de internações de pessoas idosas por causas sensíveis à atenção primária X 1000 / População idosa residente`,
-    35: `Nº de pessoas idosas com avaliação multidimensional realizada X 100 / Nº de idosos cadastrados na Atenção Primária`,
-    36: `Nº de recém-nascidos com teste de triagem auditiva neonatal X 100 / Nº total de nascidos vivos`,
-    37: `Número de linhas de cuidado implantadas para atenção às pessoas com Transtorno do Espectro Autista (TEA) e suas famílias`,
-    38: `Nº de atendimentos especializados a pessoa com deficiência X 100 / Nº total de pessoas com deficiência cadastradas`,
-    39: `Nº de recém-nascidos com Apgar menor de 7 no 5º minuto X 100 / Nº total de nascidos vivos na Maternidade Municipal`,
-    40: `Número de linhas de cuidado implantadas para atenção às pessoas com Transtorno do Espectro Autista (TEA) e suas famílias`,
+    26: `Número de casos de sífilis congênita notificados em menores de 1 ano X 1000 / Número de nascidos vivos`,
+    27: `(𝑁º de Nascidos Vivos / População Total) * 1000`,
+    28: `(𝑁º de Internações por CSAP / População Total) * 10000`,
+    29: `Razão de exames citopatológicos em mulheres de 25 a 64 anos`,
+    30: `Razão de exames de mamografia de rastreamento realizados em mulheres de 50 a 69 anos`,
+    31: `Taxa de mortalidade prematura (30 a 69 anos) por DCNT por 100 mil habitantes`,
+    32: `Nº de pessoas idosas que participam de atividades coletivas/grupais X 100 / Nº de pessoas idosas cadastradas`,
+    33: `Nº de equipes de eSF e eAP capacitadas em envelhecimento X 100 / Total de equipes`,
+    34: `Número de internações de idosos por fratura de fêmur X 1000 / População idosa`,
+    35: `Nº de idosos com avaliação multidimensional realizada X 100 / Total de idosos cadastrados`,
+    36: `Nº de recém-nascidos com teste de triagem neonatal X 100 / Total de nascidos vivos`,
+    37: `Número de serviços especializados de reabilitação implantados (CER IV)`,
+    38: `Nº de atendimentos odontológicos a pessoa com deficiência X 100 / Total de PcD atendidas`,
+    39: `Nº de RNs com Apgar menor de 7 no 5º min X 100 / Total de nascidos vivos`,
+    40: `Número de linhas de cuidado implantadas para atenção ao TEA`,
     41: `Número de ações de matriciamento realizadas pelo CAPS com equipes de APS`,
     42: `Número de casos notificados de tentativa de suicídio`,
-    43: `Número de reinternações de residentes por transtorno mental ocorridas em até 12 meses, após a 1ª internação X 100 / Número total de internações por transtorno mental`,
-    44: `Tempo médio de espera para atendimento médico de pacientes classificados na triagem como laranja`,
-    45: `Número de óbitos nas internações por AVC X 100 / Número total de internações por AVC`,
-    46: `Número de óbitos nas internações por IAM X 100 / Número total de internações por IAM`,
-    47: `Número de pessoas assistidas em hospitais quando acidentadas X 100 / Número total de acidentados`,
-    48: `Tempo resposta (minutos)`,
-    49: `Taxa de mortalidade por causas externas na população masculina entre 20 a 59 anos`,
-    50: `Número de consultas médicas na APS/SUS pela população masculina na faixa etária entre 20 a 59 anos`,
-    51: `Número de procedimentos ambulatoriais de média complexidade X 100 / População residente`,
-    52: `Número de procedimentos de reabilitação executados`,
-    53: `Percentual de unidades da assistência e unidades administrativas do hospital`,
-    54: `Percentual de protocolos implantados nas unidades assistenciais do Hospital Geral de Parauapebas`,
-    55: `Taxa de ocupação de leito hospitalar (%)`,
-    56: `Taxa de mortalidade hospitalar (%)`,
-    57: `Taxa de infecção geral (%)`,
-    58: `Tempo médio de internação hospitalar (dias)`,
-    59: `Percentual de servidores capacitados e treinados com carga horária de 30h por ano`,
-    60: `Número de eventos Sentinela`,
-    61: `Percentual de satisfação`,
-    62: `Número de casos de AIDS em menores de 5 anos`,
-    63: `Proporção de análises realizadas em amostras de água para consumo humano quanto aos parâmetros coliformes totais, cloro residual livre e turbidez`,
-    64: `Percentual de casos novos de tuberculose com exame anti HIV realizado`,
-    65: `Proporção de registro de óbitos com causa básica definida`,
-    66: `Coberturas vacinais (CV) adequadas do Calendário Básico de Vacinação da criança`,
-    67: `Percentual dos contatos examinados dos casos novos de hanseníase`,
-    68: `Percentual de unidades de saúde com ações de promoção da saúde, prevenção e assistência aos pacientes de hepatites virais`,
-    69: `Percentual de doenças compulsórias imediatas registrada no SINAN encerradas em até 60 dias a partir da data de notificação`,
-    70: `Número de grupos de ações de vigilância sanitária realizados`,
-    71: `Número de casos autóctones de malária`,
-    72: `Número de unidades de saúde com serviço de notificação contínua de violência doméstica, sexual e outras violências`,
-    73: `Número absoluto de óbito por dengue`,
-    74: `Percentual de investigação de óbitos maternos`,
-    75: `Percentual de investigações dos óbitos de mulheres em idade fértil (10 a 14 anos MIF)`,
-    76: `Número de ações de vigilância em saúde do trabalhador`,
-    77: `Número de ciclos de visita domiciliar com cobertura de imóveis visitados para controle vetorial da dengue`,
-    78: `Percentual de serviços com gestão de centros de custos na rede de saúde SUS`,
-    79: `Percentual de serviços realizando ações de educação permanente`,
-    80: `Percentual de novos trabalhadores concursados e contratados com capacitação introdutória`,
-    81: `Percentual de profissionais de saúde com ações de qualidade de vida e saúde do trabalhador`,
-    82: `Percentual de serviços de saúde com a implantação dos GTH com plano de trabalho`,
-    83: `Número de projetos de articulação de talentos na SEMSA nas áreas (arte/cultura e produção científica)`,
-    84: `Percentual de habilitações dos serviços ofertados`,
-    85: `Percentual de imóveis registrados`,
-    86: `Percentual de imóveis com licença operacional ambiental`,
-    87: `Percentual de habite-se dos prédios públicos`,
-    88: `Número de unidades básicas de saúde com estrutura física ampliada`,
-    89: `Número de unidades básicas de saúde construídas`,
-    90: `Percentual de unidades de saúde equipadas que forem ampliadas e construídas`,
-    91: `Número de Central de Imunização construída`,
-    92: `Número de Centro de Zoonoses construído`,
-    93: `Número de Centros de Atenção Psicossocial (CAPS) construídos`,
-    94: `Número de bases descentralizadas do SAMU construídas`,
-    95: `Número de Centro Especializado em Reabilitação CER tipo IV com Oficina ortopédica construído`,
-    96: `Número de ampliações realizadas`,
-    97: `Número absoluto`
+    43: `Percentual de reinternações por transtorno mental ocorridas em até 12 meses`,
+    44: `Tempo médio de espera para atendimento médico em triagem laranja (minutos)`,
+    45: `Número de óbitos em internações por AVC X 100 / Total de internações por AVC`,
+    46: `Número de óbitos em internações por IAM X 100 / Total de internações por IAM`,
+    47: `Proporção de acidentados assistidos em ambiente hospitalar (%)`,
+    48: `Tempo resposta SAMU (minutos)`,
+    49: `Taxa de mortalidade por causas externas na população masculina entre 20 e 59 anos`,
+    50: `Média de consultas médicas na APS por homem de 20 a 59 anos`,
+    51: `Taxa de procedimentos ambulatoriais de média complexidade per capita`,
+    52: `Volume de procedimentos de reabilitação realizados`,
+    53: `Percentual de informatização hospitalar atingido (%)`,
+    54: `Percentual de protocolos clínicos implantados nas unidades assistenciais`,
+    55: `Taxa de ocupação de leitos hospitalares operacionais (%)`,
+    56: `Taxa de mortalidade hospitalar global (%)`,
+    57: `Taxa de infecção hospitalar global (%)`,
+    58: `Tempo médio de permanência hospitalar (dias)`,
+    59: `Percentual de servidores capacitados com carga mínima de 30h/ano`,
+    60: `Número absoluto de eventos sentinela registrados`,
+    61: `Percentual de satisfação global apurado na ouvidoria hospitalar`,
+    62: `Incidência de novos casos de AIDS em menores de 5 anos`,
+    63: `Percentual de conformidade de análises de amostras de água de consumo`,
+    64: `Percentual de casos novos de tuberculose testados para HIV`,
+    65: `Proporção de óbitos com causa básica definida (%)`,
+    66: `Percentual de vacinas prioritárias atingindo meta de cobertura de 95%`,
+    67: `Percentual de contatos intradomiciliares examinados em casos novos de hanseníase`,
+    68: `Percentual de unidades básicas ativas em prevenção/tratamento de hepatites virais`,
+    69: `Percentual de notificações imediatas encerradas no SINAN em até 60 dias`,
+    70: `Grupos de ações programadas de vigilância sanitária executados em sua totalidade`,
+    71: `Casos autóctones de malária registrados no município`,
+    72: `Número de unidades com notificação ativa de violência interpessoal/autoprovocada`,
+    73: `Óbitos confirmados por dengue`,
+    74: `Percentual de investigações concluídas de óbitos maternos`,
+    75: `Percentual de investigações de óbitos de mulheres em idade fértil (MIF)`,
+    76: `Ações executadas de vigilância em saúde do trabalhador`,
+    77: `Ciclos regulares de visitas domiciliares de controle vetorial executados`,
+    78: `Percentual de implantação de apuração de centro de custos nas unidades do SUS`,
+    79: `Percentual de unidades com plano de educação permanente ativo`,
+    80: `Taxa de cobertura do curso de integração aos novos profissionais admitidos`,
+    81: `Percentual de profissionais beneficiados por ações de saúde e bem-estar`,
+    82: `Percentual de serviços de saúde com Grupos de Trabalho de Humanização instituídos`,
+    83: `Projetos de valorização de talentos e produção técnico-científica realizados`,
+    84: `Percentual de serviços de saúde devidamente habilitados junto ao Ministério da Saúde`,
+    85: `Percentual de imóveis da saúde com regularização fundiária concluída`,
+    86: `Percentual de prédios da saúde com Licença de Operação Ambiental regular`,
+    87: `Percentual de prédios públicos da saúde com Habite-se deferido`,
+    88: `Unidades básicas com obras de ampliação física concluídas`,
+    89: `Novas unidades básicas de saúde construídas e entregues`,
+    90: `Unidades de saúde ampliadas/construídas devidamente aparelhadas e equipadas`,
+    91: `Construção da Central Municipal de Imunobiológicos`,
+    92: `Construção do Centro de Controle de Zoonoses`,
+    93: `Construção de novas unidades de Centro de Atenção Psicossocial (CAPS)`,
+    94: `Implantação de bases descentralizadas do SAMU 192`,
+    95: `Construção do Centro Especializado em Reabilitação (CER IV)`,
+    96: `Ampliação física estrutural da ala de urgência/emergência`,
+    97: `Construção de heliponto para suporte aéreo de resgate médico`
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- DOM Elements ---
     const goalsGrid = document.getElementById('goals-grid');
     const searchInput = document.getElementById('search-input');
     const yearFilter = document.getElementById('year-filter');
@@ -738,20 +726,55 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('goal-modal');
     const modalWrapper = document.getElementById('modal-content-wrapper');
 
-    // --- State ---
+    // API Key modal elements
+    const apiModal = document.getElementById('api-modal');
+    const configApiBtn = document.getElementById('config-api-btn');
+    const closeApiModalBtn = document.getElementById('close-api-modal');
+    const apiKeyInput = document.getElementById('gemini-api-key-input');
+    const saveApiKeyBtn = document.getElementById('save-api-key-btn');
+    const clearApiKeyBtn = document.getElementById('clear-api-key-btn');
+
     let yearCharts = {}; 
     let activeData = []; 
-    let currentFilteredData = []; 
-    
-    // This function reorganizes the original dataset into a more usable structure.
+
+    configApiBtn.addEventListener('click', () => {
+        apiKeyInput.value = getStoredApiKey();
+        apiModal.classList.remove('hidden');
+        apiKeyInput.focus();
+    });
+
+    closeApiModalBtn.addEventListener('click', () => {
+        apiModal.classList.add('hidden');
+    });
+
+    saveApiKeyBtn.addEventListener('click', () => {
+        const val = apiKeyInput.value.trim();
+        if (val) {
+            setStoredApiKey(val);
+            showToast("Chave de API salva com sucesso no navegador!", "success");
+        } else {
+            setStoredApiKey("");
+            showToast("Chave de API removida.", "info");
+        }
+        apiModal.classList.add('hidden');
+    });
+
+    clearApiKeyBtn.addEventListener('click', () => {
+        apiKeyInput.value = "";
+        setStoredApiKey("");
+        showToast("Chave de API apagada.", "info");
+        apiModal.classList.add('hidden');
+    });
+
+    apiModal.addEventListener('click', (e) => {
+        if (e.target === apiModal) apiModal.classList.add('hidden');
+    });
+
     function initializeData() {
-        let allGoals = [];
         let allDiretrizes = new Set();
         let allObjetivos = new Set();
-
         const masterData = {};
 
-        // First, populate the master structure from all years to gather all goals
         for (const year in dataSets) {
             for (const diretriz in dataSets[year]) {
                 allDiretrizes.add(diretriz);
@@ -773,7 +796,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-         // Now, populate the yearly data into the master structure
+
         for (const year in dataSets) {
             for (const diretriz in dataSets[year]) {
                 for (const objetivo in dataSets[year][diretriz]) {
@@ -784,23 +807,14 @@ document.addEventListener('DOMContentLoaded', () => {
                                 resultado: goalData.resultado,
                                 quadrimestres: goalData.quadrimestres || {} 
                             };
-                            // Add previous year results if available
-                            if (goalData.resultado_2022 && masterData[goalData.id].yearly_data["2022"]) {
-                                // This assumes 'resultado_2022' is on 2023 data, etc.
-                                // It's a bit redundant if 2022 data is already processed but ensures it's there.
-                            }
-                            if (goalData.resultado_2023 && masterData[goalData.id].yearly_data["2023"]) {
-                               // Similar logic
-                            }
                         }
                     }
                 }
             }
         }
         
-        allGoals = Object.values(masterData);
+        const allGoals = Object.values(masterData);
 
-         // Add placeholder data for 2025
         allGoals.forEach(goal => {
             if (!goal.yearly_data["2025"]) {
                  const finalYearData = goal.yearly_data["2024"] || goal.yearly_data["2023"] || goal.yearly_data["2022"]; 
@@ -851,10 +865,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const strValue = String(value);
         if (strValue.toLowerCase() === 'na' || strValue.trim() === '' || strValue.toLowerCase().includes('andamento') || strValue.toLowerCase().includes('apurando') || strValue.toLowerCase().includes('mensurado') || strValue.toLowerCase() === 's/n') return NaN;
         const cleanedValue = strValue.replace('%', '').replace(',', '.').replace("'", "").trim();
-        const numericValue = parseFloat(cleanedValue);
-        return numericValue; // parseFloat itself returns NaN if parsing fails
+        return parseFloat(cleanedValue);
     }
-
 
     function getStatus(goal, result, expected) {
         const resultadoVal = String(result).toLowerCase(); 
@@ -868,13 +880,13 @@ document.addEventListener('DOMContentLoaded', () => {
              return { text: "Não Aplicável", color: "gray"};
         }
         
-        const polaridade = goal.polaridade.toUpperCase();
+        const polaridade = (goal.polaridade || '').toUpperCase();
 
         if (polaridade === 'MENOR') {
             if (resultadoNum < esperadoNum) return { text: "Superada", color: "green" };
             if (resultadoNum === esperadoNum) return { text: "Alcançada", color: "green"};
             return { text: "Não Alcançada", color: "red" };
-        } else { // Default to MAIOR
+        } else {
              if (resultadoNum > esperadoNum) return { text: "Superada", color: "green"};
              if (resultadoNum >= esperadoNum) return { text: "Alcançada", color: "green"};
              if (resultadoNum >= esperadoNum * 0.9) return { text: "Parcialmente Alcançada", color: "orange"};
@@ -895,9 +907,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function showLoading(container, message) { container.innerHTML = `<div class="flex items-center justify-center p-8"><svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg><span class="text-lg text-gray-600">${message}</span></div>`; }
-    function showError(container, error) { console.error("Error AI:", error); container.innerHTML = `<div class="p-4 bg-red-100 text-red-700 rounded"><strong>Erro:</strong><p>${error.message || 'Falha ao contatar a API.'}</p></div>`; }
+    function showLoading(container, message) { 
+        container.innerHTML = `
+            <div class="flex items-center justify-center p-8">
+                <svg class="animate-spin -ml-1 mr-3 h-8 w-8 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span class="text-lg text-gray-600">${message}</span>
+            </div>`; 
+    }
     
+    function showError(container, error) { 
+        console.error("AI Error:", error); 
+        container.innerHTML = `
+            <div class="p-4 bg-red-100 text-red-700 rounded-lg">
+                <strong>Erro na operação:</strong>
+                <p class="text-sm mt-1">${error.message || 'Falha na comunicação com a API.'}</p>
+            </div>`; 
+    }
+
     function renderAllYearCharts(baseFilteredData) {
         const years = ["2022", "2023", "2024"];
         chartsGrid.innerHTML = ''; 
@@ -916,7 +945,7 @@ document.addEventListener('DOMContentLoaded', () => {
             chartsGrid.appendChild(chartContainer);
 
             let filteredForChart = baseFilteredData;
-             if (selectedStatusFilter !== 'todos') {
+            if (selectedStatusFilter !== 'todos') {
                 filteredForChart = baseFilteredData.filter(goal => {
                     const yearData = goal.yearly_data[year];
                     if (!yearData) return false;
@@ -966,7 +995,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 type: 'doughnut',
                 data: chartData,
                 options: {
-                    responsive: true, maintainAspectRatio: false,
+                    responsive: true, 
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: { position: 'bottom' },
                         tooltip: {
@@ -986,7 +1016,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-    
+
     function renderGoals(filteredData, selectedYear) {
         goalsGrid.innerHTML = '';
         const selectedQuad = quadrimestreFilter.value;
@@ -1032,7 +1062,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <p class="text-gray-600 text-sm my-2 flex-grow">${goal.title}</p>
                     <div class="mt-3 pt-3 border-t">
-                        <h4 class="text-xs font-bold text-gray-500 mb-2 uppercase">Histórico de Resultados (${selectedQuad === 'anual' ? 'Anual' : selectedQuad + 'º RDQA'}) (Resultado / Esperado)</h4>
+                        <h4 class="text-xs font-bold text-gray-500 mb-2 uppercase">Histórico (${selectedQuad === 'anual' ? 'Anual' : selectedQuad + 'º RDQA'})</h4>
                         <div class="year-result-grid">
                             ${historyHtml}
                         </div>
@@ -1050,7 +1080,7 @@ document.addEventListener('DOMContentLoaded', () => {
             goalsGrid.appendChild(card);
         });
     }
-    
+
     function filterAndRender() {
         const searchTerm = searchInput.value.toLowerCase();
         const selectedDiretriz = diretrizFilter.value;
@@ -1063,17 +1093,24 @@ document.addEventListener('DOMContentLoaded', () => {
             return searchMatch && diretrizMatch && objetivoMatch;
         });
 
-        currentFilteredData = baseFilteredData; 
         renderAllYearCharts(baseFilteredData); 
-        
         const selectedYearToList = yearFilter.value;
         renderGoals(baseFilteredData, selectedYearToList);
     }
 
     async function callGeminiAPI(promptText) {
+        const currentKey = getStoredApiKey();
+        if (!currentKey) {
+            // Prompt user directly via the UI modal rather than throwing an obscure failure
+            apiModal.classList.remove('hidden');
+            apiKeyInput.focus();
+            throw new Error('Nenhuma chave de API configurada. Clique em "Chave de API" no topo da página para salvar sua chave do Google Gemini.');
+        }
+
         try {
-            const response = await ai.models.generateContent({
-                model: 'gemini-2.0-flash',
+            const client = new GoogleGenAI({ apiKey: currentKey });
+            const response = await client.models.generateContent({
+                model: 'gemini-2.5-flash',
                 contents: promptText 
             });
             const text = response.text;
@@ -1081,25 +1118,23 @@ document.addEventListener('DOMContentLoaded', () => {
             if (typeof text === 'string') {
                 return text;
             } else {
-                console.error("Invalid API response: text is not a string or is missing.", response);
-                throw new Error('Resposta da API inválida ou texto não encontrado.');
+                throw new Error('Resposta da API inválida ou texto não retornado.');
             }
         } catch (error) {
-            console.error("Gemini API call failed:", error);
+            console.error("Gemini API call failure:", error);
             let errorMessage = 'Falha ao contatar a API Gemini.';
             if (error instanceof Error && error.message) {
                 errorMessage += ` Detalhes: ${error.message}`;
             }
-            console.error("Original Gemini API error details:", error);
             throw new Error(errorMessage);
         }
     }
-    
+
     async function generateQualitativeAnalysis(goal, resultForModal, statusForModal, periodText, year) {
         const contentContainer = document.getElementById('qualitative-analysis-content');
         const genButton = document.getElementById('generate-analysis-btn');
         genButton.disabled = true;
-        showLoading(contentContainer, "Gerando análise qualitativa...");
+        showLoading(contentContainer, "Gerando análise qualitativa com IA...");
         (document.getElementById('action-plan-container')).classList.add('hidden'); 
         (document.getElementById('export-action-plan-csv-btn'))?.classList.add('hidden');
         const yearData = goal.yearly_data[year];
@@ -1127,14 +1162,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             2.  **Hipóteses e Fatores Contribuintes (2-3 pontos principais):**
                 *   Levante hipóteses concisas sobre os possíveis fatores que influenciaram o resultado (positivo ou negativo).
-                *   Seja específico(a) se possível, considerando o contexto da saúde pública.
+                *   Seja específico(a) se possível, considerando o contexto da saúde pública municipal.
 
             3.  **Sugestões Estratégicas (2-3 ações concretas):**
                 *   Proponha ações claras, realistas e direcionadas para manter/melhorar o resultado ou para reverter um cenário negativo.
-                *   As ações devem ser focadas e de alto impacto.
 
-            Mantenha a linguagem profissional, clara e direta. Evite generalidades excessivas.
-            O resultado deve ser apenas o texto em Markdown.
+            Mantenha a linguagem profissional, clara e direta. Retorne apenas o texto em Markdown formatado.
         `;
         try {
             const text = await callGeminiAPI(prompt);
@@ -1144,21 +1177,23 @@ document.addEventListener('DOMContentLoaded', () => {
             actionPlanBtn.classList.remove('hidden');
             actionPlanBtn.dataset.analysisText = text; 
             actionPlanBtn.disabled = false; 
-        } catch (error) { showError(contentContainer, error); } finally { genButton.disabled = false; }
+        } catch (error) { 
+            showError(contentContainer, error); 
+        } finally { 
+            genButton.disabled = false; 
+        }
     }
 
     function parseMarkdownTableToCsv(markdownTableText) {
         if (!markdownTableText || typeof markdownTableText !== 'string') return "";
         const lines = markdownTableText.trim().split('\n');
-        if (lines.length < 1) return ""; // Need at least a header row
+        if (lines.length < 1) return "";
 
         const csvRows = [];
-
         const escapeCsvCell = (cell) => {
             let cleanedCell = cell.trim();
-            // If cell contains comma, newline, or double quote, enclose in double quotes
             if (cleanedCell.includes(',') || cleanedCell.includes('\n') || cleanedCell.includes('"')) {
-                cleanedCell = `"${cleanedCell.replace(/"/g, '""')}"`; // Escape double quotes by doubling them
+                cleanedCell = `"${cleanedCell.replace(/"/g, '""')}"`;
             }
             return cleanedCell;
         };
@@ -1167,27 +1202,21 @@ document.addEventListener('DOMContentLoaded', () => {
         lines.forEach((line, index) => {
             line = line.trim();
             if (!line.startsWith('|') || !line.endsWith('|')) {
-                // If we were in a table and this line is not part of it, stop processing further lines as table
-                if(isTableContent) isTableContent = false;
+                if (isTableContent) isTableContent = false;
                 return;
             }
             isTableContent = true;
 
-
-            // Skip separator line (e.g., |---|---|---| or |:---|:--:|---:|)
-            // A more robust check for separator line:
-            if (line.match(/^\|[-:|'\s]+\|$/) && line.includes('-')) { // Check for presence of '-'
-                 if (index === 0) return; // Cannot be a separator if it's the first line
-                 // Check if the previous line was a header (not a separator itself)
+            if (line.match(/^\|[-:|'\s]+\|$/) && line.includes('-')) {
+                 if (index === 0) return;
                  const prevLine = lines[index-1]?.trim();
                  if (prevLine && prevLine.startsWith('|') && !prevLine.match(/^\|[-:|'\s]+\|$/)) {
-                    return; // This is likely a separator
+                    return;
                  }
             }
 
-
             const cells = line.slice(1, -1).split('|').map(escapeCsvCell);
-            if (cells.length > 0 && cells.some(cell => cell.trim() !== '')) { // Ensure row is not just empty cells
+            if (cells.length > 0 && cells.some(cell => cell.trim() !== '')) {
                 csvRows.push(cells.join(','));
             }
         });
@@ -1196,9 +1225,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function downloadCsv(csvString, filename) {
-        const blob = new Blob(["\uFEFF" + csvString], { type: 'text/csv;charset=utf-8;' }); // Add BOM for Excel compatibility
-        const link = document.createElement("a");
-        if (link.download !== undefined) {
+        try {
+            const blob = new Blob(["\uFEFF" + csvString], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
             const url = URL.createObjectURL(blob);
             link.setAttribute("href", url);
             link.setAttribute("download", filename);
@@ -1207,11 +1236,13 @@ document.addEventListener('DOMContentLoaded', () => {
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
-        } else {
-            alert("Seu navegador não suporta o download automático. Por favor, copie o conteúdo manualmente se necessário.");
+            showToast("Download do CSV iniciado com sucesso.", "success");
+        } catch (e) {
+            console.error("Falha no download:", e);
+            showToast("Não foi possível realizar o download automático do CSV.", "warning");
         }
     }
-    
+
     async function generateActionPlan(goal, analysisText, currentSelectedYear, currentPeriodText) {
         const contentContainer = document.getElementById('action-plan-content');
         const genButton = document.getElementById('generate-action-plan-btn');
@@ -1220,11 +1251,12 @@ document.addEventListener('DOMContentLoaded', () => {
         genButton.disabled = true;
         if (exportCsvButton) exportCsvButton.classList.add('hidden');
         (document.getElementById('action-plan-container')).classList.remove('hidden');
-        showLoading(contentContainer, "Elaborando plano de ação...");
+        showLoading(contentContainer, "Elaborando plano de ação com base na análise...");
 
         const prompt = `
             Com base na meta e na análise qualitativa fornecida, crie um plano de ação detalhado.
-            Apresente o plano em uma tabela Markdown com as seguintes colunas: "Ação Proposta", "Responsável Sugerido (Setor/Área)", "Prazo Sugerido (Ex: Curto, Médio, Longo Prazo ou data específica)", "Recursos Necessários (Principais)".
+            Apresente o plano em uma tabela Markdown com as seguintes colunas: 
+            "Ação Proposta", "Responsável Sugerido (Setor/Área)", "Prazo Sugerido (Ex: Curto, Médio, Longo Prazo)", "Recursos Necessários (Principais)".
 
             **Meta ID:** ${goal.id}
             **Título da Meta:** ${goal.title}
@@ -1234,11 +1266,9 @@ document.addEventListener('DOMContentLoaded', () => {
             ${analysisText}
             ---
 
-            **Instruções para o Plano de Ação:**
-            *   As ações devem ser concretas, mensuráveis (se possível), alcançáveis, relevantes e com prazos definidos.
-            *   Derive as ações das "Sugestões Estratégicas" e "Hipóteses/Problemáticas" da análise.
-            *   Seja específico quanto aos responsáveis e recursos, mesmo que genéricos (ex: "Equipe da Atenção Básica", "Recursos Humanos e Materiais de Escritório").
-            *   Formate a resposta exclusivamente como uma tabela Markdown. Não inclua texto introdutório ou conclusivo fora da tabela.
+            Instruções:
+            * As ações devem ser práticas e alinhadas ao SUS municipal.
+            * Formate a resposta exclusivamente com a tabela Markdown, sem textos adicionais antes ou depois.
         `;
         try {
             const markdownText = await callGeminiAPI(prompt);
@@ -1255,7 +1285,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     };
                 } else {
                     exportCsvButton.classList.add('hidden');
-                     console.warn("CSV content is empty or invalid, hiding export button.");
                 }
             }
         } catch (error) {
@@ -1267,14 +1296,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function exportModalContentToPDF(goal, selectedYear, periodText) {
-        // @ts-ignore
-        const { jsPDF } = window.jspdf;
+        const { jsPDF } = window.jspdf || {};
+        if (!jsPDF) {
+            showToast("Biblioteca PDF indisponível no momento.", "error");
+            return;
+        }
+
         const modalContentForExport = document.getElementById('ai-export-content');
         const modalTitleText = `Análise da Meta ${goal.id}: ${goal.title}`;
         const modalSubtitleText = `RAG ${selectedYear} - ${periodText}`;
     
         if (!modalContentForExport) {
-            alert("Conteúdo para exportação não encontrado.");
+            showToast("Conteúdo para exportação não encontrado.", "warning");
             return;
         }
     
@@ -1282,7 +1315,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const actionPlanContentElement = document.getElementById('action-plan-content');
         const actionPlanWasHidden = actionPlanContainer.classList.contains('hidden');
         
-        // Temporarily show action plan if it has content and was hidden, for PDF generation
         if (actionPlanWasHidden && actionPlanContentElement && actionPlanContentElement.innerHTML.trim() !== '') {
             actionPlanContainer.classList.remove('hidden');
         }
@@ -1290,52 +1322,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const exportButton = document.getElementById('export-pdf-btn');
         const originalButtonText = exportButton.innerHTML;
         exportButton.disabled = true;
-        exportButton.innerHTML = 'Gerando PDF... <svg class="animate-spin inline-block ml-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+        exportButton.innerHTML = 'Gerando PDF...';
     
         try {
-            // @ts-ignore
             const canvas = await html2canvas(modalContentForExport, {
                 scale: 2,
                 useCORS: true,
-                backgroundColor: '#ffffff',
-                 onclone: (documentClone) => {
-                    const clonedContent = documentClone.getElementById('ai-export-content');
-                    if (clonedContent) {
-                        const analysisContent = clonedContent.querySelector('#qualitative-analysis-content');
-                        const planContainer = clonedContent.querySelector('#action-plan-container');
-                        const planContent = clonedContent.querySelector('#action-plan-content');
-
-                        if (analysisContent) (analysisContent).style.display = 'block';
-                        
-                        // Only make planContent visible if it has actual content
-                        if (planContainer && planContent && planContent.innerHTML.trim() !== '') {
-                           (planContainer).style.display = 'block'; // Show container
-                           (planContent).style.display = 'block'; // Show content
-                        } else if (planContainer) {
-                           (planContainer).style.display = 'none'; // Hide if no content
-                        }
-
-
-                        clonedContent.querySelectorAll('h3').forEach(h => {
-                            (h).style.color = '#1f2937'; 
-                            (h).style.fontSize = '1.25rem'; 
-                            (h).style.fontWeight = '700';
-                            (h).style.marginBottom = '1rem'; // Ensure spacing
-                        });
-                         clonedContent.querySelectorAll('.ai-content table').forEach(table => {
-                            (table).style.width = '100%';
-                            (table).style.borderCollapse = 'collapse';
-                        });
-                        clonedContent.querySelectorAll('.ai-content th, .ai-content td').forEach(cell => {
-                            (cell).style.border = '1px solid #ddd';
-                            (cell).style.padding = '8px';
-                            (cell).style.textAlign = 'left';
-                        });
-                         clonedContent.querySelectorAll('.ai-content th').forEach(th => {
-                            (th).style.backgroundColor = '#f2f2f2';
-                        });
-                    }
-                }
+                backgroundColor: '#ffffff'
             });
     
             const imgData = canvas.toDataURL('image/png');
@@ -1351,22 +1344,21 @@ document.addEventListener('DOMContentLoaded', () => {
             const contentWidth = pdfWidth - 2 * margin;
     
             let currentY = margin;
-            pdf.setFontSize(16);
+            pdf.setFontSize(14);
             pdf.setTextColor(40, 40, 40);
             const titleLines = pdf.splitTextToSize(modalTitleText, contentWidth);
             pdf.text(titleLines, margin, currentY + 5);
-            currentY += titleLines.length * 7 + 5; 
+            currentY += titleLines.length * 6 + 5; 
     
-            pdf.setFontSize(12);
+            pdf.setFontSize(11);
             pdf.setTextColor(100, 100, 100);
             const subtitleLines = pdf.splitTextToSize(modalSubtitleText, contentWidth);
             pdf.text(subtitleLines, margin, currentY);
-            currentY += subtitleLines.length * 5 + 10;
+            currentY += subtitleLines.length * 5 + 8;
     
             const imgProps = pdf.getImageProperties(imgData);
             const canvasOriginalWidth = imgProps.width;
             const canvasOriginalHeight = imgProps.height;
-            
             const imageDisplayWidth = contentWidth;
             const imageDisplayHeight = (canvasOriginalHeight * imageDisplayWidth) / canvasOriginalWidth;
     
@@ -1384,10 +1376,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 canvasSliceHeight = Math.min(canvasSliceHeight, canvasHeightRemaining); 
                 
                 if (canvasSliceHeight <= 0 && canvasHeightRemaining > 0) { 
-                    if (currentY !== margin || (currentY === margin && availablePageHeightForImage <=0) ) pdf.addPage(); 
+                    pdf.addPage(); 
                     currentY = margin;
                     const fullPageImageHeight = pdfHeight - 2 * margin;
-                    canvasSliceHeight = Math.min( (fullPageImageHeight / imageDisplayHeight) * canvasOriginalHeight, canvasHeightRemaining);
+                    canvasSliceHeight = Math.min((fullPageImageHeight / imageDisplayHeight) * canvasOriginalHeight, canvasHeightRemaining);
                 }
 
                 const displaySegmentHeight = (canvasSliceHeight * imageDisplayWidth) / canvasOriginalWidth;
@@ -1409,12 +1401,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 canvasHeightRemaining -= canvasSliceHeight;
             }
             pdf.save(`Analise_Meta_${goal.id}_${selectedYear}_${periodText.replace(/º RDQA/g, 'Q').replace(/\s+/g, '_')}.pdf`);
-    
+            showToast("Relatório PDF baixado com sucesso!", "success");
         } catch (error) {
             console.error("Error generating PDF:", error);
-            alert("Falha ao gerar o PDF. Verifique o console para mais detalhes.");
+            showToast("Falha ao gerar o documento PDF.", "error");
         } finally {
-            // Restore visibility of action plan container if it was originally hidden
             if (actionPlanWasHidden && actionPlanContainer) {
                 actionPlanContainer.classList.add('hidden');
             }
@@ -1422,7 +1413,7 @@ document.addEventListener('DOMContentLoaded', () => {
             exportButton.innerHTML = originalButtonText;
         }
     }
-    
+
     function openGoalModal(goal) {
         const selectedYear = yearFilter.value;
         const period = quadrimestreFilter.value;
@@ -1430,8 +1421,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const yearData = goal.yearly_data[selectedYear];
 
         if (!yearData) {
-            console.warn(`No data found for goal ${goal.id} in year ${selectedYear}`);
-            modalWrapper.innerHTML = `<div class="p-6 text-center text-red-500">Dados não disponíveis para esta meta no ano selecionado.</div> <button id="close-modal" class="absolute top-4 right-4 text-gray-500 text-3xl leading-none hover:text-gray-800">&times;</button>`;
+            modalWrapper.innerHTML = `
+                <div class="p-6 text-center text-red-500">Dados não disponíveis para esta meta no ano selecionado.</div> 
+                <button id="close-modal" class="absolute top-4 right-4 text-gray-500 text-3xl leading-none hover:text-gray-800">&times;</button>`;
             modal.classList.remove('hidden');
             (document.getElementById('close-modal')).addEventListener('click', () => modal.classList.add('hidden'));
             return;
@@ -1467,11 +1459,13 @@ document.addEventListener('DOMContentLoaded', () => {
             variacaoDisplay = `${isNegative ? '-' : ''}${formattedAbsVariacao}${isPercentageContext ? '%' : ''}`;
         }
 
-
         modalWrapper.innerHTML = `
             <div class="p-6 md:p-8">
                 <div class="flex justify-between items-start mb-4 pb-4 border-b">
-                    <div><h2 class="text-2xl font-bold text-gray-800" id="modal-title-text">Detalhes da Meta ${goal.id}</h2><p class="text-sm text-gray-500">RAG ${selectedYear} - ${periodText}</p></div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800" id="modal-title-text">Detalhes da Meta ${goal.id}</h2>
+                        <p class="text-sm text-gray-500">RAG ${selectedYear} - ${periodText}</p>
+                    </div>
                     <button id="close-modal" aria-label="Fechar modal" class="text-gray-500 text-3xl leading-none hover:text-gray-800">&times;</button>
                 </div>
                 <div class="space-y-4">
@@ -1515,18 +1509,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div id="ai-export-content">
                             <div id="qualitative-analysis-container" class="mb-6">
                                 <h3 class="text-xl font-bold text-gray-800 mb-4">Análise Qualitativa com IA ✨</h3>
-                                <div id="qualitative-analysis-content" class="ai-content text-gray-700 leading-relaxed min-h-[5rem]" aria-live="polite"></div>
+                                <div id="qualitative-analysis-content" class="ai-content text-gray-700 leading-relaxed min-h-[5rem]" aria-live="polite">
+                                    <p class="text-sm text-gray-500 italic">Clique em "Gerar Análise" abaixo para obter o diagnóstico inteligente da meta.</p>
+                                </div>
                             </div>
                             <div id="action-plan-container" class="hidden mb-6">
                                 <h3 class="text-xl font-bold text-gray-800 mb-4">Plano de Ação com IA ✨</h3>
                                 <div id="action-plan-content" class="ai-content text-gray-700 leading-relaxed min-h-[5rem]" aria-live="polite"></div>
-                                <button id="export-action-plan-csv-btn" class="hidden mt-4 w-full sm:w-auto bg-teal-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">Exportar Plano para CSV</button>
+                                <button id="export-action-plan-csv-btn" class="hidden mt-4 w-full sm:w-auto bg-teal-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700">Exportar Plano para CSV</button>
                             </div>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-4 mt-4">
-                            <button id="generate-analysis-btn" class="w-full sm:w-auto flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">Gerar Análise</button>
-                            <button id="generate-action-plan-btn" class="w-full sm:w-auto flex-1 hidden bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">Elaborar Plano de Ação</button>
-                            <button id="export-pdf-btn" class="w-full sm:w-auto flex-1 bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Exportar para PDF</button>
+                            <button id="generate-analysis-btn" class="w-full sm:w-auto flex-1 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700">Gerar Análise</button>
+                            <button id="generate-action-plan-btn" class="w-full sm:w-auto flex-1 hidden bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700">Elaborar Plano de Ação</button>
+                            <button id="export-pdf-btn" class="w-full sm:w-auto flex-1 bg-green-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700">Exportar para PDF</button>
                         </div>
                     </div>
                 </div>
@@ -1538,8 +1534,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeModalBtn = document.getElementById('close-modal');
         closeModalBtn.addEventListener('click', () => {
             modal.classList.add('hidden');
-            modal.removeAttribute('aria-modal');
-            modal.removeAttribute('aria-labelledby');
         });
         (document.getElementById('generate-analysis-btn')).addEventListener('click', () => generateQualitativeAnalysis(goal, resultForModal, statusForModal, periodText, selectedYear));
         (document.getElementById('generate-action-plan-btn')).addEventListener('click', (e) => {
@@ -1547,7 +1541,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (analysisText) {
                 generateActionPlan(goal, analysisText, selectedYear, periodText);
             } else {
-                showError(document.getElementById('action-plan-content'), { name: "InputError", message: "Análise qualitativa não encontrada. Gere a análise primeiro." });
+                showError(document.getElementById('action-plan-content'), { message: "Análise qualitativa não encontrada. Gere a análise primeiro." });
             }
         });
         (document.getElementById('export-pdf-btn')).addEventListener('click', () => exportModalContentToPDF(goal, selectedYear, periodText));
@@ -1555,8 +1549,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const escapeListener = (e) => {
             if (e.key === 'Escape') {
                 modal.classList.add('hidden');
-                modal.removeAttribute('aria-modal');
-                modal.removeAttribute('aria-labelledby');
                 document.removeEventListener('keydown', escapeListener); 
             }
         };
@@ -1565,15 +1557,12 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.addEventListener('click', (e) => { 
             if ((e.target).id === 'goal-modal') {
                 modal.classList.add('hidden');
-                modal.removeAttribute('aria-modal');
-                modal.removeAttribute('aria-labelledby');
                 document.removeEventListener('keydown', escapeListener); 
             }
         });
         closeModalBtn.focus(); 
     }
     
-    // --- Initial Load & Event Listeners ---
     const allFilters = [yearFilter, searchInput, objetivoFilter, quadrimestreFilter, statusFilter];
     allFilters.forEach(el => el.addEventListener('change', filterAndRender));
     
@@ -1587,15 +1576,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeData();
     filterAndRender(); 
 });
-
-/*
-declare var Chart: any; 
-declare var showdown: any;
-declare var html2canvas: any; // Declare html2canvas
-// @ts-ignore
-declare var jspdf: any; // Declare jspdf global UMD object
-*/
     </script>
 </body>
 </html>
-```

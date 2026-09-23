@@ -203,40 +203,6 @@
         </div>
     </div>
 
-    <!-- Modal de Privacidade e Canal de Segurança (A08) -->
-    <div id="privacy-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[85vh] overflow-y-auto modal-enter p-6">
-            <div class="flex justify-between items-start pb-3 border-b mb-4">
-                <div class="flex items-center space-x-2">
-                    <span class="text-2xl">🔒</span>
-                    <h3 class="text-xl font-bold text-gray-800">Privacidade e Canal de Segurança da Informação</h3>
-                </div>
-                <button id="close-privacy-modal" class="text-gray-400 hover:text-gray-700 text-2xl leading-none">&times;</button>
-            </div>
-            <div class="space-y-4 text-sm text-gray-600">
-                <div>
-                    <h4 class="font-semibold text-gray-800 text-base mb-1">Aviso de Privacidade (LGPD)</h4>
-                    <p>
-                        Este painel destina-se exclusivamente à transparência pública e prestação de contas dos indicadores de saúde da Secretaria Municipal de Saúde de Parauapebas. Não realizamos coleta de cookies rastreadores de publicidade, telemetria de navegação invasiva ou armazenamento de dados pessoais dos usuários.
-                    </p>
-                </div>
-                <div class="p-3 bg-emerald-50 border-l-4 border-emerald-500 rounded text-emerald-900">
-                    <h5 class="font-semibold mb-1">Canal de Reporte de Incidentes e Vulnerabilidades:</h5>
-                    <p class="text-xs leading-relaxed">
-                        Caso identifique comportamentos anômalos, inconsistências de dados ou potenciais vulnerabilidades de segurança, entre em contato com a equipe responsável:
-                    </p>
-                    <div class="mt-2 text-xs font-mono bg-white p-2 rounded border border-emerald-200">
-                        <strong>E-mail:</strong> ti.saude@parauapebas.pa.gov.br<br>
-                        <strong>Encarregado de Dados (DPO):</strong> Ouvidoria Geral / SEMSA Parauapebas-PA
-                    </div>
-                </div>
-            </div>
-            <div class="mt-6 pt-4 border-t flex justify-end">
-                <button id="btn-close-privacy" class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 text-sm font-medium">Entendido</button>
-            </div>
-        </div>
-    </div>
-
     <footer class="bg-gray-800 text-gray-300 py-6 mt-auto border-t border-gray-700">
         <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
             <div class="flex items-center space-x-3">
@@ -253,8 +219,6 @@
             </div>
 
             <div class="flex items-center space-x-4 text-xs text-gray-400">
-                <button id="btn-privacy-footer" type="button" class="hover:text-white underline transition-colors">Aviso de Privacidade & LGPD</button>
-                <span>•</span>
                 <button id="btn-lineage-footer" type="button" class="hover:text-white underline transition-colors">Linhagem dos Dados</button>
             </div>
         </div>
@@ -1345,29 +1309,20 @@ document.addEventListener('DOMContentLoaded', () => {
     searchInput.addEventListener('input', filterAndRender); 
     
     const lineageModal = document.getElementById('lineage-modal');
-    const privacyModal = document.getElementById('privacy-modal');
     const openLineageBtns = [document.getElementById('btn-lineage-footer')].filter(Boolean);
-    const openPrivacyBtns = [document.getElementById('btn-privacy-footer')].filter(Boolean);
 
     openLineageBtns.forEach(btn => {
         if (btn) btn.addEventListener('click', () => lineageModal.classList.remove('hidden'));
     });
-    openPrivacyBtns.forEach(btn => {
-        if (btn) btn.addEventListener('click', () => privacyModal.classList.remove('hidden'));
-    });
 
     document.getElementById('close-lineage-modal')?.addEventListener('click', () => lineageModal.classList.add('hidden'));
     document.getElementById('btn-close-lineage')?.addEventListener('click', () => lineageModal.classList.add('hidden'));
-    document.getElementById('close-privacy-modal')?.addEventListener('click', () => privacyModal.classList.add('hidden'));
-    document.getElementById('btn-close-privacy')?.addEventListener('click', () => privacyModal.classList.add('hidden'));
 
-    [lineageModal, privacyModal].forEach(modalEl => {
-        if (modalEl) {
-            modalEl.addEventListener('click', (e) => {
-                if (e.target === modalEl) modalEl.classList.add('hidden');
-            });
-        }
-    });
+    if (lineageModal) {
+        lineageModal.addEventListener('click', (e) => {
+            if (e.target === lineageModal) lineageModal.classList.add('hidden');
+        });
+    }
 
     initializeData();
     filterAndRender(); 

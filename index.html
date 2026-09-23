@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Painel de Monitoramento RAG V.01</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/showdown/dist/showdown.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
@@ -67,12 +68,12 @@
                     </div>
                 </div>
             </div>
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center flex-wrap gap-2">
                 <a href="PPA 2022-2025 Consolidado.pdf" 
                    target="_blank" 
                    rel="noopener noreferrer"
-                   class="flex items-center bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 transition-colors duration-200 shadow-sm text-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                   class="flex items-center bg-green-600 text-white font-semibold py-2 px-3 rounded-lg hover:bg-green-700 transition-colors duration-200 shadow-sm text-xs">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1.5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
                     Plano de Saúde (PMS)
@@ -159,8 +160,85 @@
     <!-- Notification Toast Container -->
     <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col space-y-2 pointer-events-none"></div>
 
+    <!-- Modal de Linhagem dos Dados (A04 e A05) -->
+    <div id="lineage-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[85vh] overflow-y-auto modal-enter p-6">
+            <div class="flex justify-between items-start pb-3 border-b mb-4">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">📋</span>
+                    <h3 class="text-xl font-bold text-gray-800">Origem, Linhagem e Governança dos Dados</h3>
+                </div>
+                <button id="close-lineage-modal" class="text-gray-400 hover:text-gray-700 text-2xl leading-none">&times;</button>
+            </div>
+            <div class="space-y-4 text-sm text-gray-600">
+                <div class="p-3 bg-blue-50 border-l-4 border-blue-500 rounded text-blue-900">
+                    <strong>Instrumento de Gestão do SUS:</strong> Dados consolidados a partir do Relatório Anual de Gestão (RAG) e dos Relatórios Detalhados do Quadrimestre Anterior (RDQA) do município de Parauapebas - PA.
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-800 text-base mb-1">1. Fontes de Dados Primárias</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>DigiSUS Gestor - Módulo Planejamento:</strong> Módulo oficial do Ministério da Saúde para pactuação e monitoramento do PMS, PAS e RAG.</li>
+                        <li><strong>SISAB / e-SUS APS:</strong> Sistema de Informação em Saúde para a Atenção Básica.</li>
+                        <li><strong>SINAN / SINASC / SIM:</strong> Sistemas de vigilância epidemiológica, nascidos vivos e mortalidade.</li>
+                        <li><strong>SCNES e SIA/SIH:</strong> Cadastro Nacional de Estabelecimentos de Saúde e sistemas ambulatoriais/hospitalares.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-800 text-base mb-1">2. Classificação da Informação (LAI e LGPD)</h4>
+                    <p>
+                        Todos os indicadores apresentados neste painel são <strong>estatísticas agregadas e consolidadas de gestão pública</strong>, cuja transparência ativa é exigida pela <em>Lei de Acesso à Informação (Lei nº 12.527/2011)</em> e pela <em>Lei Complementar nº 141/2012</em>. 
+                        <strong>Nenhum dado individualizado de pacientes ou informação pessoal sensível (PII)</strong> é armazenado, processado ou trafegado nesta plataforma.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-gray-800 text-base mb-1">3. Processamento e Soberania dos Dados</h4>
+                    <p>
+                        A aplicação opera de forma <strong>100% estática e em memória local (client-side)</strong>. Não há conexões ativas com modelos de IA de terceiros nem envio de dados municipais a servidores externos.
+                    </p>
+                </div>
+            </div>
+            <div class="mt-6 pt-4 border-t flex justify-end">
+                <button id="btn-close-lineage" class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 text-sm font-medium">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Privacidade e Canal de Segurança (A08) -->
+    <div id="privacy-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl max-h-[85vh] overflow-y-auto modal-enter p-6">
+            <div class="flex justify-between items-start pb-3 border-b mb-4">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">🔒</span>
+                    <h3 class="text-xl font-bold text-gray-800">Privacidade e Canal de Segurança da Informação</h3>
+                </div>
+                <button id="close-privacy-modal" class="text-gray-400 hover:text-gray-700 text-2xl leading-none">&times;</button>
+            </div>
+            <div class="space-y-4 text-sm text-gray-600">
+                <div>
+                    <h4 class="font-semibold text-gray-800 text-base mb-1">Aviso de Privacidade (LGPD)</h4>
+                    <p>
+                        Este painel destina-se exclusivamente à transparência pública e prestação de contas dos indicadores de saúde da Secretaria Municipal de Saúde de Parauapebas. Não realizamos coleta de cookies rastreadores de publicidade, telemetria de navegação invasiva ou armazenamento de dados pessoais dos usuários.
+                    </p>
+                </div>
+                <div class="p-3 bg-emerald-50 border-l-4 border-emerald-500 rounded text-emerald-900">
+                    <h5 class="font-semibold mb-1">Canal de Reporte de Incidentes e Vulnerabilidades:</h5>
+                    <p class="text-xs leading-relaxed">
+                        Caso identifique comportamentos anômalos, inconsistências de dados ou potenciais vulnerabilidades de segurança, entre em contato com a equipe responsável:
+                    </p>
+                    <div class="mt-2 text-xs font-mono bg-white p-2 rounded border border-emerald-200">
+                        <strong>E-mail:</strong> ti.saude@parauapebas.pa.gov.br<br>
+                        <strong>Encarregado de Dados (DPO):</strong> Ouvidoria Geral / SEMSA Parauapebas-PA
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 pt-4 border-t flex justify-end">
+                <button id="btn-close-privacy" class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 text-sm font-medium">Entendido</button>
+            </div>
+        </div>
+    </div>
+
     <footer class="bg-gray-800 text-gray-300 py-6 mt-auto border-t border-gray-700">
-        <div class="container mx-auto px-6 flex items-center justify-center text-center sm:text-left">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
             <div class="flex items-center space-x-3">
                 <div class="flex-shrink-0 bg-white text-gray-900 rounded-full p-1.5 shadow-sm inline-flex items-center justify-center">
                     <!-- Ícone estilizado Acesso à Informação -->
@@ -169,9 +247,15 @@
                     </svg>
                 </div>
                 <div>
-                    <span class="text-xs uppercase tracking-wider text-gray-400 block font-semibold">Acesso à Informação</span>
+                    <span class="text-xs uppercase tracking-wider text-gray-400 block font-semibold">Acesso à Informação & Transparência</span>
                     <span class="text-xs sm:text-sm text-gray-200 font-medium">Fonte: DigiSUS Gestor - Acesso Público - Downloads de Documentos</span>
                 </div>
+            </div>
+
+            <div class="flex items-center space-x-4 text-xs text-gray-400">
+                <button id="btn-privacy-footer" type="button" class="hover:text-white underline transition-colors">Aviso de Privacidade & LGPD</button>
+                <span>•</span>
+                <button id="btn-lineage-footer" type="button" class="hover:text-white underline transition-colors">Linhagem dos Dados</button>
             </div>
         </div>
     </footer>
@@ -1260,6 +1344,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     searchInput.addEventListener('input', filterAndRender); 
     
+    const lineageModal = document.getElementById('lineage-modal');
+    const privacyModal = document.getElementById('privacy-modal');
+    const openLineageBtns = [document.getElementById('btn-lineage-footer')].filter(Boolean);
+    const openPrivacyBtns = [document.getElementById('btn-privacy-footer')].filter(Boolean);
+
+    openLineageBtns.forEach(btn => {
+        if (btn) btn.addEventListener('click', () => lineageModal.classList.remove('hidden'));
+    });
+    openPrivacyBtns.forEach(btn => {
+        if (btn) btn.addEventListener('click', () => privacyModal.classList.remove('hidden'));
+    });
+
+    document.getElementById('close-lineage-modal')?.addEventListener('click', () => lineageModal.classList.add('hidden'));
+    document.getElementById('btn-close-lineage')?.addEventListener('click', () => lineageModal.classList.add('hidden'));
+    document.getElementById('close-privacy-modal')?.addEventListener('click', () => privacyModal.classList.add('hidden'));
+    document.getElementById('btn-close-privacy')?.addEventListener('click', () => privacyModal.classList.add('hidden'));
+
+    [lineageModal, privacyModal].forEach(modalEl => {
+        if (modalEl) {
+            modalEl.addEventListener('click', (e) => {
+                if (e.target === modalEl) modalEl.classList.add('hidden');
+            });
+        }
+    });
+
     initializeData();
     filterAndRender(); 
 });

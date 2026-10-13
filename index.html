@@ -123,7 +123,7 @@
                     </div>
                 </div>
                 <div>
-                    <select id="year-filter" aria-label="Ano (para lista)" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                    <select id="year-filter" aria-label="Ano dos cards" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
                         <option value="2024" selected>2024</option>
                         <option value="2023">2023</option>
                         <option value="2022">2022</option>
@@ -152,13 +152,22 @@
                 </div>
             </div>
             <div>
-                <select id="quadrimestre-filter" aria-label="Período (resultados)" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                <select id="quadrimestre-filter" aria-label="Período dos gráficos e detalhes" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
                     <option value="anual" selected>Anual</option>
                     <option value="1">1º RDQA</option>
                     <option value="2">2º RDQA</option>
                     <option value="3">3º RDQA</option>
                 </select>
             </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-lg shadow-sm mb-6">
+            <label for="card-view-filter" class="block text-sm font-semibold text-gray-700 mb-2">Visualização dos resultados nos cards</label>
+            <select id="card-view-filter" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
+                <option value="todos" selected>1º, 2º, 3º quadrimestre e anual</option>
+                <option value="anual">Apenas resultado anual do ano selecionado</option>
+                <option value="todos-anos">Todos os anos — resultados anuais</option>
+            </select>
         </div>
 
         <!-- Chart Section -->
@@ -749,6 +758,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const goalsGrid = document.getElementById('goals-grid');
     const searchInput = document.getElementById('search-input');
     const yearFilter = document.getElementById('year-filter');
+    const cardViewFilter = document.getElementById('card-view-filter');
     const diretrizFilter = document.getElementById('diretriz-filter');
     const objetivoFilter = document.getElementById('objetivo-filter');
     const quadrimestreFilter = document.getElementById('quadrimestre-filter');
@@ -1067,7 +1077,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderGoals(filteredData, selectedYear) {
         goalsGrid.innerHTML = '';
         const selectedQuad = quadrimestreFilter.value;
-        goalsListTitle.textContent = `Detalhamento das Metas - ${selectedYear}${selectedQuad !== 'anual' ? ` (${selectedQuad}º RDQA)` : ' (Anual)'}`;
+        goalsListTitle.textContent = cardViewFilter.value === 'todos-anos' ? 'Detalhamento das Metas — Todos os anos (Anual)' : `Detalhamento das Metas — ${selectedYear} (${cardViewFilter.value === 'anual' ? 'Anual' : '1º, 2º, 3º RDQA e Anual'})`;
 
         if (filteredData.length === 0) {
             noResults.classList.remove('hidden');
@@ -1079,21 +1089,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const yearData = goal.yearly_data[selectedYear];
             if (!yearData) return;
 
-            let displayResult = selectedQuad === 'anual' ? yearData.resultado : (yearData.quadrimestres ? yearData.quadrimestres[selectedQuad] : yearData.resultado);
-            if (displayResult === undefined && selectedQuad !== 'anual') displayResult = yearData.resultado; 
+            const displayResult = yearData.resultado;
 
             const statusInfo = getStatus(goal, displayResult, yearData.esperado);
 
-            let historyHtml = ['2022', '2023', '2024', '2025'].map(year => {
-                const data = goal.yearly_data[year];
-                if (!data) return `<div class="bg-gray-100 col-span-2"><strong class="font-semibold">${year}:</strong> N/A</div>`;
-                
-                let histResult = selectedQuad === 'anual' || year !== selectedYear ? data.resultado : (data.quadrimestres ? data.quadrimestres[selectedQuad] : data.resultado);
-                if (histResult === undefined && selectedQuad !== 'anual' && year === selectedYear) histResult = data.resultado;
-
-                const historyStatus = getStatus(goal, histResult, data.esperado);
-                return `<div class="bg-gray-100"><strong class="font-semibold">${year}:</strong></div><div class="bg-gray-100 text-right"><span class="text-${historyStatus.color}-600 font-semibold">${histResult || 'N/A'}</span> / ${data.esperado || 'N/A'}</div>`;
+            const periods = cardViewFilter.value === 'anual'
+                ? [['anual', 'Anual']]
+                : [['1', '1º RDQA'], ['2', '2º RDQA'], ['3', '3º RDQA'], ['anual', 'Anual']];
+            let historyHtml = periods.map(([period, label]) => {
+                const result = period === 'anual' ? yearData.resultado : yearData.quadrimestres?.[period];
+                const periodStatus = getStatus(goal, result, yearData.esperado);
+                return `<div class="bg-gray-100"><strong class="font-semibold">${label}</strong></div><div class="bg-gray-100 text-right"><span class="text-${periodStatus.color}-600 font-semibold">${result ?? 'Não informado'}</span></div>`;
             }).join('');
+
+            if (cardViewFilter.value === 'todos-anos') {
+                historyHtml = Object.keys(goal.yearly_data).sort().map(year => {
+                    const data = goal.yearly_data[year];
+                    const annualStatus = getStatus(goal, data.resultado, data.esperado);
+                    return `<div class="bg-gray-100"><strong class="font-semibold">${year}</strong></div><div class="bg-gray-100 text-right"><span class="text-${annualStatus.color}-600 font-semibold">${data.resultado ?? 'Não informado'}</span> / ${data.esperado ?? 'Não informado'}</div>`;
+                }).join('');
+            }
 
             const card = document.createElement('div');
             card.className = `goal-card bg-white p-4 rounded-lg shadow-sm border-l-4 border-${statusInfo.color}-500 cursor-pointer flex flex-col`;
@@ -1105,11 +1120,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="flex-grow flex flex-col">
                     <div class="flex justify-between items-start mb-2">
                          <h3 class="text-base font-semibold text-gray-800">Meta ${goal.id}</h3>
-                        <span class="text-xs font-bold uppercase px-2 py-1 bg-${statusInfo.color}-100 text-${statusInfo.color}-800 rounded-full whitespace-nowrap">${statusInfo.text}</span>
+                        <span class="text-xs font-bold uppercase px-2 py-1 bg-${statusInfo.color}-100 text-${statusInfo.color}-800 rounded-full whitespace-nowrap">${statusInfo.text} (Anual ${selectedYear})</span>
                     </div>
                     <p class="text-gray-600 text-sm my-2 flex-grow">${goal.title}</p>
                     <div class="mt-3 pt-3 border-t">
-                        <h4 class="text-xs font-bold text-gray-500 mb-2 uppercase">Histórico (${selectedQuad === 'anual' ? 'Anual' : selectedQuad + 'º RDQA'})</h4>
+                        <h4 class="text-xs font-bold text-gray-500 mb-2 uppercase">${cardViewFilter.value === 'todos-anos' ? 'Resultados anuais — todos os anos' : 'Resultados de ' + selectedYear}</h4>
+                        <p class="text-xs text-gray-600 mb-2">${cardViewFilter.value === 'todos-anos' ? 'Resultado / meta esperada em cada ano' : 'Meta esperada: <strong>' + (yearData.esperado ?? 'Não informado') + '</strong>'}</p>
                         <div class="year-result-grid">
                             ${historyHtml}
                         </div>
@@ -1282,7 +1298,7 @@ document.addEventListener('DOMContentLoaded', () => {
         closeModalBtn.focus(); 
     }
     
-    const allFilters = [yearFilter, searchInput, objetivoFilter, quadrimestreFilter, statusFilter];
+    const allFilters = [cardViewFilter, yearFilter, searchInput, objetivoFilter, quadrimestreFilter, statusFilter];
     allFilters.forEach(el => el.addEventListener('change', filterAndRender));
     
     diretrizFilter.addEventListener('change', () => {

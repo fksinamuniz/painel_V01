@@ -149,10 +149,10 @@
                 </div>
                 <div>
                     <select id="year-filter" aria-label="Ano dos cards" class="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
-                        <option value="2024" selected>2024</option>
+                        <option value="2025" selected>2025</option>
+                        <option value="2024">2024</option>
                         <option value="2023">2023</option>
                         <option value="2022">2022</option>
-                        <option value="2025">2025</option>
                     </select>
                 </div>
                 <div>
@@ -198,7 +198,7 @@
         <!-- Chart Section -->
         <div class="bg-white p-6 rounded-lg shadow-sm mb-6">
              <h3 id="chart-title" class="text-xl font-semibold text-center mb-4">Resumo Comparativo do Desempenho Anual</h3>
-             <div id="charts-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+             <div id="charts-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
                 <!-- Year charts will be inserted here -->
              </div>
         </div>
@@ -716,6 +716,129 @@ const dataSets = {
                     {"id":97,"title":"Construir 01 heliponto até 2025.","esperado":"0","resultado":"0","resultado_2023":"NA","polaridade":"maior","quadrimestres":{"1":"0","2":"0","3":"0"}}
           ]
         }
+      },
+      "2025": {
+        "Diretriz 1: Fortalecimento da Atenção Primária à Saúde e aprimoramento das Redes de Atenção à Saúde ampliando o acesso com qualidade e eficiência.": {
+                "Objetivo 1.1: Aprimorar e fortalecer as ações e políticas estratégicas de saúde na atenção primária concomitante as redes de atenção em saúde, com o escopo de focar na promoção e prevenção da saúde.": [
+                    {"id":1,"title":"Aumentar a Cobertura de Agentes Comunitários de Saúde de 67,09% em 2020 para 80,00% em 2025.","esperado":"80%","resultado":"88,31%","polaridade":"maior","quadrimestres":{"1":"83,50%","2":"88,50%","3":"88,31%"}},
+                    {"id":2,"title":"Realizar ações assistenciais básicas complementares para a população indigena 03 vezes ao ano.","esperado":"3","resultado":"5","polaridade":"maior","quadrimestres":{"1":"1","2":"3","3":"5"}},
+                    {"id":3,"title":"Implantar assistência oftalmológica como ação integrante do Programa Saúde na Escola de 0% em 2020 para 100% das escolas pactauadas em 2025.","esperado":"100%","resultado":"48,64%","polaridade":"maior","quadrimestres":{"1":"48,64%","2":"48,64%","3":"48,64%"}},
+                    {"id":4,"title":"Aumentar a cobertura de acompanhamento das condicionalidades de saúde do Programa Auxilio Brasil (Programa Bolsa Família - BPF) de 60,94% em 2019 para 80% em 2025.","esperado":"80%","resultado":"73,53%","polaridade":"maior","quadrimestres":{"1":"72,56%","2":"70,77%","3":"73,53%"}},
+                    {"id":5,"title":"Aumentar a cobertura populacional estimada pela estratégia Saúde da Família de 62,95 em 2020 para 80,00 em 2025.","esperado":"80%","resultado":"71,43%","polaridade":"maior","quadrimestres":{"1":"62,07%","2":"65,58%","3":"71,43%"}},
+                    {"id":6,"title":"Ampliar a cobertura populacional estimada pelas equipes de Atenção Básica de 78,93% em 2020 para 92,00% em 2025.","esperado":"92%","resultado":"73,44%","polaridade":"maior","quadrimestres":{"1":"64,06%","2":"67,59%","3":"73,44%"}},
+                    {"id":7,"title":"Ampliar a assistência ofertada por equipe multiprofissional e interdisciplinar na APS de 59,00 em 2019 para 64,00 em 2025.","esperado":"19,5","resultado":"47,18","polaridade":"maior","quadrimestres":{"1":"34,10","2":"45,06","3":"47,18"}},
+                    {"id":8,"title":"Ampliar oferta de exames laboratoriais para as unidades Básicas de saúde de de 30% em 2020 para 50% em 2025.","esperado":"50%","resultado":"19,5%","polaridade":"maior","quadrimestres":{"1":"16,7%","2":"18,3%","3":"18,3%"}},
+                    {"id":9,"title":"Reduzir em 10% o quantitativo de crianças integrantes no programa APLV até 2025.","esperado":"10%","resultado":"58%","polaridade":"menor","quadrimestres":{"1":"54%","2":"64%","3":"58%"}},
+                    {"id":10,"title":"Reduzir a tendência da gravidez de adolescentes de 10 a 19 anos de 15,30% em 2020 para 14,50% em 2025.","esperado":"14,5%","resultado":"14,08%","polaridade":"menor","quadrimestres":{"1":"13,84%","2":"13,70%","3":"14,08%"}},
+                    {"id":11,"title":"Aumentar a cobertura da vacina Poliomielite inativada e da Pentavalente de 36% em 2020 para 95% em 2025.","esperado":"95%","resultado":"82,7%","polaridade":"maior","quadrimestres":{"1":"68%","2":"82,57%","3":"82,7%"}},
+                    {"id":12,"title":"Ampliar o percentual de diabéticos com solicitação hemoglobina glicada de 11% em 2020 para 90% em 2025.","esperado":"90%","resultado":"38,17%","polaridade":"maior","quadrimestres":{"1":"26,49%","2":"37%","3":"37,17%"}},
+                    {"id":13,"title":"Aumentar a proporção de gestantes com pelo menos 06 (seis) consultas pré natal, sendo a primeira até a 20ª semana de gestação de 38% em 2020 para 80% em 2025.","esperado":"80%","resultado":"65%","polaridade":"maior","quadrimestres":{"1":"52%","2":"61%","3":"61%"}},
+                    {"id":14,"title":"Aumentar a proporção de gestantes com realização de exames para siflis e HIV de 67% em 2020 para 95% em 2025.","esperado":"95%","resultado":"94%","polaridade":"maior","quadrimestres":{"1":"93%","2":"95%","3":"95%"}},
+                    {"id":15,"title":"Aumentar o percentual de pessoas hipertensas com pressão arterial aferida em cada semestre de 14% em 2020 para 90% em 2025.","esperado":"90%","resultado":"23,7%","polaridade":"maior","quadrimestres":{"1":"18%","2":"21%","3":"23,70%"}},
+                    {"id":16,"title":"Aumentar a proporção de gestantes com atendimento odontológico de 22% em 2020 para 90% em 2025.","esperado":"90%","resultado":"75%","polaridade":"maior","quadrimestres":{"1":"60%","2":"72%","3":"75%"}},
+                    {"id":17,"title":"Ampliar o acesso a atenção odontológica na atenção básica de 52,17 em 2020 para 80,00% em 2025.","esperado":"80%","resultado":"31,13%","polaridade":"maior","quadrimestres":{"1":"30,57%","2":"21,33%","3":"37,13%"}},
+                    {"id":18,"title":"Implantar nas Unidade Básicas de Saúde o Prontuário Eletrônico de 61% em 2020 para 100% em 2025.","esperado":"100%","resultado":"100%","polaridade":"maior","quadrimestres":{"1":"100%","2":"64%","3":"100%"}}
+                ],
+                "Objetivo 1.2: Implementar a Politica Municipal de Assistência Farmacêutica na rede municipal de saúde.": [
+                    {"id":19,"title":"Implantar o cuidado farmacêutico em 50% das Unidades Básicas de Saúde de zona urbana.","esperado":"50%","resultado":"6,25%","polaridade":"maior","quadrimestres":{"1":"6,25%","2":"6,25%","3":"6,25%"}},
+                    {"id":20,"title":"Implantar Farmácia Viva no município até 2025.","esperado":"1","resultado":"0","polaridade":"maior","quadrimestres":{"1":"0","2":"0","3":"0"}},
+                    {"id":21,"title":"Implantar fitoterapia em 100% das Unidades Básicas de Saúde até 2025.","esperado":"100%","resultado":"100%","polaridade":"maior","quadrimestres":{"1":"0%","2":"100%","3":"100%"}},
+                    {"id":22,"title":"Promover 01 ação ao ano para o uso racional de medicamentos até 2025.","esperado":"1","resultado":"1","polaridade":"maior","quadrimestres":{"1":"0","2":"0","3":"1"}}
+                ],
+                "Objetivo 1.3: Promover a integração sistêmica nas redes de atenção à saúde, de ações e serviços de saúde com provisão de atenção contínua, integral, de qualidade, responsável e humanizada.": [
+                    {"id":23,"title":"Reduzir a mortalidade infantil de 12,18 em 2020 para 10 até 2025.","esperado":"10","resultado":"11,4","polaridade":"menor","quadrimestres":{"1":"12,02","2":"12,09","3":"11,40"}},
+                    {"id":24,"title":"Reduzir a mortalidade materna de 06 em 2020 para 0 até 2025.","esperado":"0","resultado":"4","polaridade":"menor","quadrimestres":{"1":"3","2":"1","3":"4"}},
+                    {"id":25,"title":"Aumentar o percentual de parto normal no SUS de 37,90% em 2020 para 60,00% até 2025.","esperado":"60%","resultado":"53,86%","polaridade":"maior","quadrimestres":{"1":"51,29%","2":"52,87%","3":"53,86%"}},
+                    {"id":26,"title":"Reduzir o número de sífilis congênita de 50 em 2020 para 20 em 2025.","esperado":"20","resultado":"45","polaridade":"menor","quadrimestres":{"1":"15","2":"30","3":"45"}},
+                    {"id":27,"title":"Reduzir a taxa de natalidade de 21,70% em 2020 para 18,00% até 2025.","esperado":"18%","resultado":"15,84%","polaridade":"menor","quadrimestres":{"1":"5,28%","2":"10,51%","3":"15,84%"}},
+                    {"id":28,"title":"Reduzir as internações de causas sensiveis a Atenção Básica de 24,16% em 2020 para 21% até 2025.","esperado":"21%","resultado":"18,99%","polaridade":"menor","quadrimestres":{"1":"18,99%","2":"18,99%","3":"17,88%"}},
+                    {"id":29,"title":"Ampliar de 0,26 em 2019 para 0,42 até 2025 a razão de mulheres na faixa etária de 25 a 64 anos com um exame citopatológico a cada três anos.","esperado":"0,42","resultado":"0,07","polaridade":"maior","quadrimestres":{"1":"0,07","2":"0,07","3":"0,11"}},
+                    {"id":30,"title":"Ampliar de 0,23 em 2020 para 0,35 em 2025 a razão de exames de mamografia de rastreamento realizados em mulheres de 50 a 69 anos.","esperado":"0,35","resultado":"0","polaridade":"maior","quadrimestres":{"1":"0,005","2":"0,005","3":"0,08"}},
+                    {"id":31,"title":"Reduzir de 217,47/100.000 hab. em 2020 para 113,51/100.000 até 2025 a taxa de mortalidade prematura (30 a 69 anos) por DCNT.","esperado":"113,51","resultado":"77,95","polaridade":"menor","quadrimestres":{"1":"77,95","2":"77,95","3":"90,74"}},
+                    {"id":32,"title":"Alcançar 50% de pessoas idosas na participação das atividades coletivas/grupais em relação ao número de idosos cadastrados na atenção básica.","esperado":"50%","resultado":"20,68%","polaridade":"maior","quadrimestres":{"1":"2,55%","2":"20,68%","3":"20,68%"}},
+                    {"id":33,"title":"Alcançar 80% das equipes de eSF e eAP capacitadas em envelhecimento e saúde da pessoa idosa.","esperado":"80%","resultado":"25,3%","polaridade":"maior","quadrimestres":{"1":"25,3%","2":"25,3%","3":"25,3%"}},
+                    {"id":34,"title":"Reduzir em 3% a taxa de internação de pessoas idosas por fratura de fêmur.","esperado":"2,32%","resultado":"1,8%","polaridade":"menor","quadrimestres":{"1":"1,80%","2":"1,8%","3":"1,8%"}},
+                    {"id":35,"title":"Alcançar 60% de pessoas idosas com avaliação multidimensional realizada, em relação aos número de idosos cadastrados no e-sus/ab (APS).","esperado":"60%","resultado":"1,04%","polaridade":"maior","quadrimestres":{"1":"1,04%","2":"1,04%","3":"1,04%"}},
+                    {"id":36,"title":"Ampliar a cobertura do teste de triagem neonatal de 34,97% em 2020 para 80% em 2025 de teste realizado no SUS.","esperado":"80%","resultado":"96%","polaridade":"maior","quadrimestres":{"1":"91,80%","2":"79,5%","3":"96%"}},
+                    {"id":37,"title":"Implantar 01 serviço de Saúde Especializado em Reabilitação por Meio da Habilitação do CER IV até 2025.","esperado":"1","resultado":"0","polaridade":"maior","quadrimestres":{"1":"0","2":"1","3":"0"}},
+                    {"id":38,"title":"Ampliar a proporção de atendimentos odontológico a pessoa com deficiência de 15,81% em 2020 para 60% ate 2025.","esperado":"60%","resultado":"9,7%","polaridade":"maior","quadrimestres":{"1":"9,7%","2":"60%","3":"9,7%"}},
+                    {"id":39,"title":"Reduzir a proporção de recém-Nascidos com Apgar menor de 7 no 5º minuto na Maternidade Municipal de 1,50% em 2020 para 1% até 2025.","esperado":"1%","resultado":"0,72%","polaridade":"menor","quadrimestres":{"1":"1,2%","2":"1,4%","3":"0,72%"}},
+                    {"id":40,"title":"Implantar 01 de linha de cuidado para atenção ás pessoas com transtorno do espectro (TEA) Autista e suas familias até 2025.","esperado":"1","resultado":"0","polaridade":"maior","quadrimestres":{"1":"Em elaboração","2":"1","3":"0"}},
+                    {"id":41,"title":"Ampliar em 25% ao ano as ações de matriciamento realizadas pelo Centro de Atenção Psicossocial (CAPS) com equipes de Atenção Primária em Saúde (APS).","esperado":"100%","resultado":"100%","polaridade":"maior","quadrimestres":{"1":"80%","2":"80%","3":"100%"}},
+                    {"id":42,"title":"Aumentar em 70% o número de casos notificados de tentativa de suicídio até 2025.","esperado":"127","resultado":"224","polaridade":"maior","quadrimestres":{"1":"51","2":"74","3":"224"}},
+                    {"id":43,"title":"Reduzir em 50% até 2025, as reinternações de residentes por transtornos mental ocorridas em até 12 meses, após a 1ª internação.","esperado":"6","resultado":"53","polaridade":"menor","quadrimestres":{"1":"16","2":"22","3":"53"}},
+                    {"id":49,"title":"Reduzir em 12% ao ano a taxa de mortalidade por causas externas na população masculina entre 20 a 59 anos.","esperado":"93,46","resultado":"64,8","polaridade":"menor","quadrimestres":{"1":"64,80","2":"64,80","3":"64,80"}},
+                    {"id":50,"title":"Aumentar em 0,10 ao ano a procura pelas consultas médicas na APS/SUS pela população masculina na faixa etária entre 20 a 59 anos.","esperado":"0,76","resultado":"0,07","polaridade":"maior","quadrimestres":{"1":"0,07","2":"0,07","3":"0,07"}}
+                ]
+        },
+        "Diretriz 2: Ampliação e aperfeiçoamento do acesso às ações de média e alta complexidade ambulatorial e hospitalar.": {
+                "Objetivo 2.1: Ampliar e qualificar o acesso aos serviços de saúde de qualidade, em tempo adequado, com ênfase na humanização, equidade e no atendimento das necessidades de saúde da Média e Alta Complexidade Ambulatorial e hospitalar.": [
+                    {"id":44,"title":"Reduzir o tempo de espera para atendimento médico em até 10 minutos para primeiro atendimento de pacientes classificados na triagem como laranja.","esperado":"10","resultado":"10","polaridade":"menor","quadrimestres":{"1":"10,1","2":"11","3":"10"}},
+                    {"id":45,"title":"Reduzir de 20,54% em 2020 para 18% 2025 os óbitos nas internações por Acidente Vascular Cerebral.","esperado":"18%","resultado":"18,75%","polaridade":"menor","quadrimestres":{"1":"16,12%","2":"12,5%","3":"18,75%"}},
+                    {"id":46,"title":"Reduzir os óbitos nas internações por infarto agudo do miocárdio (IAM) de 7,04% em 2020 para 4,99 em 2025.","esperado":"4,99%","resultado":"89,47%","polaridade":"menor","quadrimestres":{"1":"13,88%","2":"8,33%","3":"0%"}},
+                    {"id":47,"title":"Ampliar o número de pessoas assistidas em hospitais quando acidentadas de 48,78% em 2020 para 60% até 2025.","esperado":"60%","resultado":"47,82%","polaridade":"maior","quadrimestres":{"1":"44,4%","2":"58,53%","3":"47,82%"}},
+                    {"id":48,"title":"Reduzir o tempo resposta de 21 minutos em 2019 para 15 minutos em 2025.","esperado":"15'","resultado":"18'","polaridade":"menor","quadrimestres":{"1":"18,88'","2":"18,41'","3":"18,72'"}},
+                    {"id":51,"title":"Aumentar o número de procedimentos ambulatoriais de média complexidade para a população residente de 1% em 2021 para 2% em 2025.","esperado":"2%","resultado":"0,2%","polaridade":"maior","quadrimestres":{"1":"0,012%","2":"0,13%","3":"0,2%"}},
+                    {"id":52,"title":"Aumentar os procedimentos de reabilitação executados, em 2021, em 50%, até 2025.","esperado":"50%","resultado":"100%","polaridade":"maior","quadrimestres":{"1":"-58,85%","2":"51,05%","3":"400,05%"}},
+                    {"id":53,"title":"Informatizar 100% dos processos de trabalho das unidades assistenciais e administrativas do hospital até 2022.","esperado":"100%","resultado":"100%","polaridade":"maior","quadrimestres":{"1":"1%","2":"100%","3":"100%"}},
+                    {"id":54,"title":"100% do protocolos implantados nas unidades assistenciais (clínica médica, cirúrgica, gineco obstétrica, pediátrica, UTI e UCI, urgência e emergência ) até 2025.","esperado":"100%","resultado":"79,3%","polaridade":"maior","quadrimestres":{"1":"1%","2":"58,6%","3":"79,3%"}},
+                    {"id":55,"title":"Alcançar a taxa de ocupação do leito hospitalar em 85% até 2025.","esperado":"85%","resultado":"93%","polaridade":"maior","quadrimestres":{"1":"83%","2":"90%","3":"93%"}},
+                    {"id":56,"title":"Redução da taxa de mortalidade hospitalar para 3,50 até 2025.","esperado":"3,5%","resultado":"3,5%","polaridade":"menor","quadrimestres":{"1":"3%","2":"3,7%","3":"3,5%"}},
+                    {"id":57,"title":"Redução da taxa de infecção geral para 5% até 2025.","esperado":"5%","resultado":"0,62%","polaridade":"menor","quadrimestres":{"1":"1%","2":"0,69%","3":"0,62%"}},
+                    {"id":58,"title":"Reduzir para 4 dias o tempo médio de internação hospitalar até 2025 com exceção da obstetrícia, psiquiatria ou internação prolongada.","esperado":"4","resultado":"5","polaridade":"menor","quadrimestres":{"1":"4,38","2":"4,85","3":"4,84"}},
+                    {"id":59,"title":"Atingir 70% dos dos servidores treinados com carga horária de 30h por ano até 2025.","esperado":"70%","resultado":"35,6%","polaridade":"maior","quadrimestres":{"1":"1%","2":"16,8%","3":"35,6%"}},
+                    {"id":60,"title":"Reduzir evento sentinela em zero, até 2025.","esperado":"0","resultado":"1","polaridade":"menor","quadrimestres":{"2":"0,63","3":"0,52"}},
+                    {"id":61,"title":"Alcançar 85% de satisfação do usuário até o final de 2025.","esperado":"85%","resultado":"87%","polaridade":"maior","quadrimestres":{"1":"1%","2":"87%","3":"87%"}}
+                ]
+        },
+        "Diretriz 3: Fortalecimento das ações stratégicas de vigilância em Saúde.": {
+                "Objetivo 3.1: Fortalecer as ações de vigilância para o controle das doenças e agravos transmissíveis e não transmissiveis, e promoção da saúde, desenvolvendo ações de vigilância sanitária de interesse à saúde e implementando ações de prevenção e detecção e tratamento de IST'S, Hepatites Virais.": [
+                    {"id":62,"title":"Reduzir a incidencia de AIDS em menores de 5 anos em 0 até 2025.","esperado":"0","resultado":"0","polaridade":"menor","quadrimestres":{"1":"0","2":"0","3":"0"}},
+                    {"id":63,"title":"Ampliar a proporção de analises realizadas em amostras de água para consuma humano.","esperado":"100%","resultado":"86,8%","polaridade":"maior","quadrimestres":{"1":"54,29%","2":"86,34%","3":"86,8%"}},
+                    {"id":64,"title":"Realizar exames Anti-HIV dos casos novos de tuberculose em 100% até 2025.","esperado":"100%","resultado":"100%","polaridade":"maior","quadrimestres":{"1":"100%","2":"100%","3":"100%"}},
+                    {"id":65,"title":"Aumentar a proporção de registro de óbitos com causa básica definida em 98% até 2025.","esperado":"98%","resultado":"98,2%","polaridade":"maior","quadrimestres":{"1":"98,1%","2":"98,1%","3":"98,2%"}},
+                    {"id":66,"title":"Alcançar 100% das vacinas selecionadas com cobertura vacinal de 95% de Crianças menores de 1 ano de idade.","esperado":"100%","resultado":"25%","polaridade":"maior","quadrimestres":{"2":"0%","3":"25%"}},
+                    {"id":67,"title":"Aumentar o percentual dos contatos examinados dos casos novos de hanseniase.","esperado":"85%","resultado":"74,7%","polaridade":"maior","quadrimestres":{"1":"71,3%","2":"74%","3":"74,7%"}},
+                    {"id":68,"title":"Percentual de unidades de saúde com ações de promoção da saúde, prevenção e assistência aos pacientes de hepatites virais de 67% em 2020 para 75% em 2025.","esperado":"85%","resultado":"86%","polaridade":"maior","quadrimestres":{"1":"86%","2":"90%","3":"86%"}},
+                    {"id":69,"title":"Encerrar 90% ou mais das doenças compulsórias imediatas registradas no Sinan, em até 60 dias a partir da data de notificação.","esperado":"90%","resultado":"100%","polaridade":"maior","quadrimestres":{"1":"81,82%","2":"92,19%","3":"100%"}},
+                    {"id":70,"title":"Realizar no mínimo seis grupos de ações de Vigilância Sanitária em 100% até 2025.","esperado":"100%","resultado":"100%","polaridade":"maior","quadrimestres":{"1":"100%","2":"100%","3":"100%"}},
+                    {"id":71,"title":"Manter número de casos autóctones de malária 0 em 2020 para 0 até 2025.","esperado":"0","resultado":"22","polaridade":"menor","quadrimestres":{"1":"19","2":"0","3":"22"}},
+                    {"id":72,"title":"Ampliar o número de Unidades de Saúde com serviço de notificação contínua da violência doméstica, sexual e outras violências de 18 em 2020 para 33 até 2025.","esperado":"33","resultado":"39","polaridade":"maior","quadrimestres":{"1":"39","2":"39","3":"39"}},
+                    {"id":73,"title":"Manter o número absoluto de óbito por dengue em 0 até 2025.","esperado":"0","resultado":"1","polaridade":"menor","quadrimestres":{"1":"1","2":"1","3":"1"}},
+                    {"id":74,"title":"Manter investigação dos Obitos Maternos em 100% até 2025.","esperado":"100%","resultado":"100%","polaridade":"maior","quadrimestres":{"1":"66,66%","2":"100%","3":"100%"}},
+                    {"id":75,"title":"Aumentar as investigações dos Óbitos de mulheres em Idade fértil (10 a 49 anos MIF) de 78,30% em 2020 para 90% até 2025.","esperado":"90%","resultado":"97%","polaridade":"maior","quadrimestres":{"1":"90%","2":"93,2%","3":"97%"}},
+                    {"id":76,"title":"Ampliar ações de vigilância em saúde do trabalhador de 1 ação ao ano em 2020 para 5 ações ao ano até 2025.","esperado":"5","resultado":"5","polaridade":"maior","quadrimestres":{"1":"6","2":"100%","3":"5"}},
+                    {"id":77,"title":"Realizar 4 ciclos de visita domiciliar, dos 6 preconizados, com minimo de 80% de cobertura de imóveis visitados para controle vetorial da dengue.","esperado":"4","resultado":"0","polaridade":"maior","quadrimestres":{"1":"0","2":"0","3":"0"}}
+                ]
+        },
+        "Diretriz 4: Fortalezer a gestão do SUS, com aprimoramento da gestão da informação e valorização da educação permanente em saúde.": {
+                "Objetivo 4.1: Implementar Ações para Valorização e Qualificação dos Servidores, aprimorando os processos de planejamento, monitoramento, controle, licenças e habilitações.": [
+                    {"id":78,"title":"Implantar a gestão de centros de custos na rede de saúde SUS em 100% até 2025.","esperado":"100%","resultado":"0%","polaridade":"maior","quadrimestres":{"1":"0%","2":"0%","3":"0%"}},
+                    {"id":79,"title":"100% dos serviços realizando Ações de Educação Permanente até 2025.","esperado":"100%","resultado":"90%","polaridade":"maior","quadrimestres":{"1":"76,2%","2":"90,5%","3":"90,5%"}},
+                    {"id":80,"title":"Alcançar 100% dos novos trabalhadores concursados e contratados, com capacitação introdutória, antes de ingressarem nos serviços.","esperado":"100%","resultado":"0%","polaridade":"maior","quadrimestres":{"1":"0%","2":"0%","3":"0%"}},
+                    {"id":81,"title":"Alcançar 75% dos profissionais de saúde com ações de qualidade de vida e saúde do trabalhador.","esperado":"75%","resultado":"71%","polaridade":"maior","quadrimestres":{"1":"22%","2":"71,4%","3":"71,4%"}},
+                    {"id":82,"title":"Alcançar 75% dos serviços de saúde com a implantação dos GTH com plano de trabalho.","esperado":"75%","resultado":"0%","polaridade":"maior","quadrimestres":{"1":"30%","2":"95%","3":"9,5%"}},
+                    {"id":83,"title":"Criar 01 projeto anualmente de articulação de talentos na SEMSA nas áreas (arte/cultura e produção científica), até 2025.","esperado":"1","resultado":"9","polaridade":"maior","quadrimestres":{"1":"Em andamento","2":"1","3":"Parcial (execução em fev/2026)"}},
+                    {"id":84,"title":"Alcançar 90% de habilitação dos serviços ofertados até 2025.","esperado":"90%","resultado":"40%","polaridade":"maior","quadrimestres":{"1":"40%","2":"40%","3":"40%"}},
+                    {"id":85,"title":"Alcançar 40% de imóveis registrados até 2025.","esperado":"40%","resultado":"47,61%","polaridade":"maior","quadrimestres":{"1":"47,61%","2":"47,61%","3":"47,61%"}},
+                    {"id":86,"title":"Alcançar 50% de imóveis com Licença de Operação Ambiental até 2025.","esperado":"50%","resultado":"0%","polaridade":"maior","quadrimestres":{"1":"0%","2":"0%","3":"0%"}},
+                    {"id":87,"title":"Alcançar 50% de habite-se dos prédios públicos até 2025.","esperado":"50%","resultado":"7,7%","polaridade":"maior","quadrimestres":{"1":"7,7%","2":"7,7%","3":"7,7%"}}
+                ]
+        },
+        "Diretriz 5: Ampliação dos Investimentos em Saúde.": {
+                "Objetivo 5.1: Construir, ampliar e equipar as unidades de saúde.": [
+                    {"id":88,"title":"Ampliar a estrutura física de 07 unidades básicas de saúde até 2025.","esperado":"2","resultado":"1","polaridade":"maior","quadrimestres":{"1":"1","2":"0","3":"0"}},
+                    {"id":89,"title":"Construir 06 unidades básicas de saúde até 2025.","esperado":"2","resultado":"1","polaridade":"maior","quadrimestres":{"1":"0","2":"1","3":"0"}},
+                    {"id":90,"title":"Equipar as unidades de saúde que foram ampliadas e construidas, em 100% até 2025.","esperado":"100%","resultado":"100%","polaridade":"maior","quadrimestres":{"1":"65%","2":"100%","3":"100%"}},
+                    {"id":91,"title":"Construir 01 de Central de Imunização até 2025.","esperado":"Não programada","resultado":"Não programada","polaridade":"maior","quadrimestres":{"1":"NA","2":"NA","3":"NA"}},
+                    {"id":92,"title":"Construir 01 Centro de Zoonoses até 2025.","esperado":"1","resultado":"0","polaridade":"maior","quadrimestres":{"1":"NA","2":"NA","3":"1"}},
+                    {"id":93,"title":"Construir 02 Centros de Atenção Psicossocial até 2025 (Caps II caps i).","esperado":"2","resultado":"0","polaridade":"maior","quadrimestres":{"1":"NA","2":"1","3":"1"}},
+                    {"id":94,"title":"Construir 02 base descentralizada do SAMU até 2025.","esperado":"2","resultado":"0","polaridade":"maior","quadrimestres":{"1":"Em andamento","2":"0","3":"0"}},
+                    {"id":95,"title":"Construir 01 Centro de Reabilitação tipo IV com oficina ortopédica até 2025.","esperado":"1","resultado":"0","polaridade":"maior","quadrimestres":{"1":"Em andamento","2":"0"}},
+                    {"id":96,"title":"Ampliar estrutura fisica do Pronto Socorro até 20025.","esperado":"Não programada","resultado":"Não programada","polaridade":"maior","quadrimestres":{"1":"0%","2":"0"}},
+                    {"id":97,"title":"Construir 01 heliponto até 2025.","esperado":"Não programada","resultado":"Não programada","polaridade":"maior","quadrimestres":{}}
+                ]
+        }
       }
     };
 
@@ -1066,7 +1189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderAllYearCharts(baseFilteredData) {
-        const years = ["2022", "2023", "2024"];
+        const years = ["2022", "2023", "2024", "2025"];
         chartsGrid.innerHTML = ''; 
         const selectedQuad = quadrimestreFilter.value;
         const selectedStatusFilter = statusFilter.value;
